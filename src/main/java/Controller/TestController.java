@@ -14,4 +14,8 @@ public class TestController implements ControllerInterface{
         System.out.println("Controller Incializado!");
     }
     
+    public void test(){
+        System.out.println("Test executed");
+    }
+    
 }

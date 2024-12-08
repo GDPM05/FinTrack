@@ -28,5 +28,7 @@ public class FinTrack {
         
         //System.out.println("Teste1 contains? \n"+(teste1.contains("Manin"))+"\nTeste2 contains? \n"+(teste2.contains("Interface")));
         
+        mc.callRoute("teste");
+        
     }
 }

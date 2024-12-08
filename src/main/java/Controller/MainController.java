@@ -4,8 +4,12 @@
  */
 package Controller;
 
+import App.Config;
 import App.Database;
+import App.Router;
+
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.DirectoryIteratorException;
@@ -13,8 +17,11 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +32,9 @@ import java.util.logging.Logger;
 public class MainController {
     
     private Database db;
+    private Router router;
     private List<ControllerInterface> controllers = new ArrayList<>();
+    private Map<String, Integer> controllers_map = new HashMap<>();
     
     public MainController(){
         
@@ -39,11 +48,16 @@ public class MainController {
         
         // Initializes and stores the controllers
         getControllers();
+        
+        // Initializes the router
+        this.router = new Router();
+        
+        // Starts the app configuration
+        config();
     }
     
     private void getControllers(){
-        
-        
+               
         try{
             
             // Controllers folder
@@ -69,8 +83,10 @@ public class MainController {
                     
                     if(ControllerInterface.class.isAssignableFrom(currentClass)){
                         ControllerInterface controller = (ControllerInterface) currentClass.getDeclaredConstructor().newInstance();
-
+                         
                         controllers.add(controller);
+                        System.out.println("Class Name: "+className);
+                        controllers_map.put(className, controllers.size()-1);
                     }
                 }catch(ClassNotFoundException e){
                     System.out.println("Class not found: "+e.getMessage());
@@ -86,6 +102,52 @@ public class MainController {
         } catch (URISyntaxException ex) {
             System.out.println("Error getting controllers path: "+ex.getMessage());
         }
+    }
+    
+    public void callRoute(String route){
+        System.out.println("Route: "+route);
+        if(route == null || route == "")
+            return;
+     
+        int route_index = this.router.find_route(route);
+        
+        String[] full_route = App.Config.routes[route_index];
+            
+        System.out.println("Full route: "+Arrays.toString(full_route));
+        
+        String action = full_route[2];
+        
+        System.out.println("Action: "+action);
+        
+        String controller = "Controller."+action.split("/")[0];
+        String method_name = action.split("/")[1];
+        
+        try{
+            // Get controller instance
+            Object controllerInstance = controllers.get(controllers_map.get(controller));
+            
+            if(controllerInstance == null)
+                throw new RuntimeException("Controller not found: "+controller);
+        
+            // Get the instance class
+            Class<?> controllerClass = controllerInstance.getClass();
+            
+            // Get the method from the class, no arguments
+            Method method = controllerClass.getMethod(method_name);
+            
+            // Invoke the method from the controllers instance
+            method.invoke(controllerInstance);
+            
+            System.out.println("Method successfully executed. "+method_name);
+        }catch(Exception e){
+            System.out.println("Error while trying to get controllers method "+e.getMessage());
+        }
+    }
+    
+    private void config(){
+        
+        this.router.map_routes(App.Config.routes);
+        
     }
     
     
