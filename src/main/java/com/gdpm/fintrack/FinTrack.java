@@ -16,7 +16,7 @@ public class FinTrack {
     public static void main(String[] args) {
         System.out.println("Hello World!");
         
-        MainController mc = new MainController();
+        MainController mc = MainController.getInstance();
         
         String teste1 = "MainController.java";
         String teste2 = "ControllerInterface.java";

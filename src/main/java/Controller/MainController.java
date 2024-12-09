@@ -31,12 +31,19 @@ import java.util.logging.Logger;
  */
 public class MainController {
     
+    /**
+     * To ensure that the MainController has only one instance throughout the application and that this instance is 
+     * globally accessible, I implemented it using the Singleton design pattern.
+     */
+    
+    private static MainController instance;
+    
     private Database db;
     private Router router;
     private List<ControllerInterface> controllers = new ArrayList<>();
     private Map<String, Integer> controllers_map = new HashMap<>();
     
-    public MainController(){
+    private MainController(){
         
         // Method responsible for kickstarting our application
         this.prepare();
@@ -54,6 +61,13 @@ public class MainController {
         
         // Starts the app configuration
         config();
+    }
+    
+    public static MainController getInstance(){
+        if(instance == null)
+            return new MainController();
+        
+        return instance;
     }
     
     private void getControllers(){

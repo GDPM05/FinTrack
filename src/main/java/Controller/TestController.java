@@ -4,6 +4,8 @@
  */
 package Controller;
 
+import Views.TestView;
+
 /**
  *
  * @author gdpm
@@ -16,6 +18,11 @@ public class TestController implements ControllerInterface{
     
     public void test(){
         System.out.println("Test executed");
+        TestView testeview = new TestView();
+    }
+    
+    public void test2(){
+        System.out.println("Test2 executed");
     }
     
 }
