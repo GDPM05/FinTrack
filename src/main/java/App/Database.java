@@ -124,7 +124,7 @@ public class Database {
     }
         
     private boolean executeNonQuery(String query){
-        if(query == null || query == "")
+        if(query == null || query.equals(""))
             return false;
         
         try(PreparedStatement pstmt = this.conn.prepareStatement(query)){

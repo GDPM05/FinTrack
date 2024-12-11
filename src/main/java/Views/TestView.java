@@ -17,14 +17,16 @@ import javax.swing.JPanel;
  *
  * @author gdpm
  */
-public class TestView{
+public class TestView extends MainView{;
     
-    public TestView(){
+    private JFrame frame;
+        
+    public TestView(String title){
+        frame = prepareWindow(title);
         GUI();
     }
     
     private void GUI(){
-        JFrame frame = new JFrame();
         
         JButton button = new JButton("Click me");
         button.addActionListener(new App.EventListener("test2"));
@@ -34,12 +36,8 @@ public class TestView{
         panel.setLayout(new GridLayout(0, 1));
         
         panel.add(button);
-        panel.add(label);
         
         frame.add(panel, BorderLayout.CENTER);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("TestView");
-        frame.pack();
         frame.setVisible(true);
     }
     

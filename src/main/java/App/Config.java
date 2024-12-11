@@ -17,7 +17,8 @@ public class Config {
      * To define a route, you simply have to indicate it's type, name and what method from wich controller will be executed.
      */
     static public String[][] routes = {
-        {"teste", "GET", "TestController/test"},
+        {"home", "GET", "HomeController/index"},
+        {"teste", "GET", "TestController/index"},
         {"test2", "GET", "TestController/test2"}
     };
     

@@ -44,6 +44,11 @@
             <version>1.7.32</version> <!-- Simples implementação de log -->
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>20.0.2</version> <!-- Ajusta para a versão desejada -->
+        </dependency>
     </dependencies>
 
 </project>

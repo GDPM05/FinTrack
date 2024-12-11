@@ -120,7 +120,7 @@ public class MainController {
     
     public void callRoute(String route){
         System.out.println("Route: "+route);
-        if(route == null || route == "")
+        if(route == null || route.equals(""))
             return;
      
         int route_index = this.router.find_route(route);
