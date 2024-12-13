@@ -29,7 +29,7 @@ public class TestView extends MainView{;
     private void GUI(){
         
         JButton button = new JButton("Click me");
-        button.addActionListener(new App.EventListener("test2"));
+        button.addActionListener(new App.EventListener("test2", 0));
         
         JPanel panel = new JPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));

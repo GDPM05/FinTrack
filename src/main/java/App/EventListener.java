@@ -5,8 +5,12 @@
 package App;
 
 import Controller.MainController;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -15,17 +19,47 @@ import java.awt.event.ActionListener;
 public class EventListener implements ActionListener{
 
     private String route;
+    private String[] params;
     private MainController mc = MainController.getInstance();
     
-    public EventListener(String route){
+    public EventListener(String route, int n_fields){
         this.route = route;
+        params = new String[n_fields];
     }
     
     @Override
     public void actionPerformed(ActionEvent ae) {
         System.out.println("Event fired!");
-        // Calls the method "CallRoute" from the main controller
-        mc.callRoute(route);
+        
+        if(params.length < 0){
+            // Calls the method "CallRoute" from the main controller
+            mc.callRoute(route, null);
+            return;
+        }
+        
+        // Get's the form panel in order to collect the form data
+        JPanel formPanel = (JPanel) ((JButton) ae.getSource()).getParent();
+        
+        // Iterates through every component, in this case, the form inputs
+        int index = 0;
+        for(Component comp : formPanel.getComponents()){
+            if(comp instanceof JTextField){
+                JTextField currentInput = (JTextField) comp;
+                
+                String data = currentInput.getText();
+                
+                System.out.println("Current input data: "+data);
+                
+                params[index++] = data;
+            }   
+        }
+        
+        mc.callRoute(route, params);
+        
     }
     
 }
+
+
+
+// form -> botão de submit -> event listener -> verifica se há inputs -> se houver guarda os dados

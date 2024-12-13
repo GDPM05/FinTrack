@@ -19,7 +19,8 @@ public class Config {
     static public String[][] routes = {
         {"home", "GET", "HomeController/index"},
         {"teste", "GET", "TestController/index"},
-        {"test2", "GET", "TestController/test2"}
+        {"test2", "GET", "TestController/test2"},
+        {"post_test", "POST", "TestController/test3"}
     };
     
 }

@@ -30,5 +30,15 @@ public class TestController implements ControllerInterface{
     public void test2(){
         System.out.println("Test2 executed");
     }
+
+    public void test3(String[] data){
+        
+        System.out.println("Test 3 executed.");
+        
+        for(int i = 0; i < data.length; i++){
+            System.out.println("\nData: "+data[i]);
+        }
+        
+    }
     
 }

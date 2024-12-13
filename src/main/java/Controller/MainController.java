@@ -7,8 +7,10 @@ package Controller;
 import App.Config;
 import App.Database;
 import App.Router;
+import com.sun.istack.Nullable;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -118,7 +120,7 @@ public class MainController {
         }
     }
     
-    public void callRoute(String route){
+    public void callRoute(String route, @Nullable String[] params){
         System.out.println("Route: "+route);
         if(route == null || route.equals(""))
             return;
@@ -137,6 +139,7 @@ public class MainController {
         String method_name = action.split("/")[1];
         
         try{
+            
             // Get controller instance
             Object controllerInstance = controllers.get(controllers_map.get(controller));
             
@@ -146,22 +149,42 @@ public class MainController {
             // Get the instance class
             Class<?> controllerClass = controllerInstance.getClass();
             
-            // Get the method from the class, no arguments
-            Method method = controllerClass.getMethod(method_name);
             
-            // Invoke the method from the controllers instance
-            method.invoke(controllerInstance);
+            Method method;
+            
+            if("POST".equals(full_route[1])){
+                // Get the method from the class with arguments
+                method = controllerClass.getMethod(method_name, String[].class);
+                
+                if(params == null)
+                    params = new String[0];
+                
+                // Get the method from the class with arguments
+                method.invoke(controllerInstance, (Object) params); // Cast the params to Object
+                
+            }else{
+                // Get the method from the class, no arguments
+                method = controllerClass.getMethod(method_name);
+                
+                // Iboke the method from the class, no arguments
+                method.invoke(controllerInstance);
+            }
             
             System.out.println("Method successfully executed. "+method_name);
-        }catch(Exception e){
-            System.out.println("Error while trying to get controllers method "+e.getMessage());
+        }catch (NoSuchMethodException e) {
+            System.err.println("No such method found: " + method_name);
+            e.printStackTrace();
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            System.err.println("Error invoking method: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     
     private void config(){
-        
         this.router.map_routes(App.Config.routes);
-        
     }
     
     

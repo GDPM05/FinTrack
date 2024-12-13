@@ -24,11 +24,15 @@ public class FinTrack {
         teste1 = teste1.substring(0, (teste1.length() - 5));
         teste2 = teste2.substring(0, (teste2.length() - 5));
         
+        String[] testData = {"Hello", "18", "Unemployed"};
+        
         //System.out.println("Teste1: \n"+teste1+"\n Teste2: \n"+teste2);
         
         //System.out.println("Teste1 contains? \n"+(teste1.contains("Manin"))+"\nTeste2 contains? \n"+(teste2.contains("Interface")));
         
-        mc.callRoute("home");
+        mc.callRoute("home", null);
+        
+        mc.callRoute("post_test", testData);
         
     }
 }
