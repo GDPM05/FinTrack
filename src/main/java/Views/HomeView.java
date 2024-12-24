@@ -1,5 +1,6 @@
 package Views;
 
+import App.EventListener;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.Box;
@@ -56,6 +57,8 @@ public class HomeView extends MainView {
         transactions.setAlignmentX(JButton.LEFT_ALIGNMENT);
         accounts.setAlignmentX(JButton.LEFT_ALIGNMENT);
         goals.setAlignmentX(JButton.LEFT_ALIGNMENT);
+        
+        transactions.addActionListener(new EventListener("transactions", 0));
         
         buttonsPanel.add(Box.createVerticalGlue()); // Flexible space to center the buttons
         buttonsPanel.add(transactions);

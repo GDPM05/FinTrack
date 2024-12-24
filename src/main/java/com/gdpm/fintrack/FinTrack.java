@@ -32,7 +32,9 @@ public class FinTrack {
         
         mc.callRoute("home", null);
         
-        mc.callRoute("post_test", testData);
+        //mc.callRoute("test2", null);
+        
+        //mc.callRoute("post_test", testData);
         
     }
 }

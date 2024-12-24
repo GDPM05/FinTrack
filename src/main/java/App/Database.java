@@ -17,6 +17,8 @@ import java.sql.Statement;
  */
 public class Database {
     
+    private static Database instance;
+    
     // Default database file
     private String url = "jdbc:sqlite:fintrack.db";
     private Connection conn;
@@ -68,7 +70,7 @@ public class Database {
     };
     
     
-    public Database() {
+    private Database() {
             
         // Database connection
         this.connect();
@@ -123,6 +125,18 @@ public class Database {
         }
     }
         
+        public static Database getInstance(){
+            if(instance == null) {
+                synchronized (Database.class) {
+                    if(instance == null) {
+                        instance = new Database();
+                    }
+                }
+            }
+            return instance;
+        }
+
+    
     private boolean executeNonQuery(String query){
         if(query == null || query.equals(""))
             return false;
@@ -136,10 +150,12 @@ public class Database {
         }
     }
     
-    private ResultSet fetch(String query){
+    public ResultSet fetch(String query){
         if(query == null)
             return null;
        
+        System.out.println("Database query: "+query);
+        
         try (PreparedStatement pstmt = this.conn.prepareStatement(query)){
             ResultSet rs = pstmt.executeQuery();
             
@@ -156,6 +172,12 @@ public class Database {
             this.conn = DriverManager.getConnection(this.url);
             if(conn != null)
                 System.out.println("Connected successfully!");
+            
+            if (this.conn == null || this.conn.isClosed()) {
+                System.out.println("Connection is closed. Reconnecting...");
+                this.connect();
+            }
+
         } catch (Exception e) {
             System.out.println("Error: "+e.getMessage());
         }

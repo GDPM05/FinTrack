@@ -5,20 +5,23 @@
 package Controller;
 
 import Views.TestView;
-
+import Model.TransactionsModel;
 /**
  *
  * @author gdpm
  */
 public class TestController implements ControllerInterface{
     
+    private TransactionsModel model;
+    
     public TestController(){
         System.out.println("Controller Incializado!");
+        model = new TransactionsModel();
     }
     
     public void index(){
         String pageTitle = "Test Controller";
-                
+        
         TestView testeview = new TestView(pageTitle);
     }
     /*
@@ -29,6 +32,7 @@ public class TestController implements ControllerInterface{
     */
     public void test2(){
         System.out.println("Test2 executed");
+        
     }
 
     public void test3(String[] data){

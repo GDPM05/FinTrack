@@ -53,7 +53,7 @@ public class MainController {
         
     private void prepare(){
         // Initializes the database
-        db = new Database();
+        db = Database.getInstance();
         
         // Initializes and stores the controllers
         getControllers();
@@ -66,12 +66,16 @@ public class MainController {
     }
     
     public static MainController getInstance(){
-        if(instance == null)
-            return new MainController();
-        
+        if(instance == null) {
+            synchronized (MainController.class) {
+                if(instance == null) {
+                    instance = new MainController();
+                }
+            }
+        }
         return instance;
     }
-    
+
     private void getControllers(){
                
         try{
@@ -121,10 +125,19 @@ public class MainController {
     }
     
     public void callRoute(String route, @Nullable String[] params){
+        
+        StackTraceElement[] stackTree = Thread.currentThread().getStackTrace();
+        
+        String className = stackTree[2].getClassName();
+        String methodName = stackTree[2].getMethodName();
+        
+        System.out.println("Route caller: \n - Class: "+className + "\n - Method name: "+methodName);
+        
+        
         System.out.println("Route: "+route);
         if(route == null || route.equals(""))
             return;
-     
+        
         int route_index = this.router.find_route(route);
         
         String[] full_route = App.Config.routes[route_index];
@@ -149,6 +162,7 @@ public class MainController {
             // Get the instance class
             Class<?> controllerClass = controllerInstance.getClass();
             
+            System.out.println("\nMethod name: "+method_name);
             
             Method method;
             
@@ -176,6 +190,12 @@ public class MainController {
             e.printStackTrace();
         } catch (IllegalAccessException | InvocationTargetException e) {
             System.err.println("Error invoking method: " + e.getMessage());
+            stackTree = Thread.currentThread().getStackTrace();
+
+            className = stackTree[2].getClassName();
+            methodName = stackTree[2].getMethodName();
+
+            System.out.println("Route caller: \n - Class: "+className + "\n - Method name: "+methodName);
             e.printStackTrace();
         } catch (Exception e) {
             System.err.println("Unexpected error: " + e.getMessage());
