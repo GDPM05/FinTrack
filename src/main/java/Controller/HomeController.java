@@ -1,6 +1,5 @@
 package Controller;
 
-import Model.TransactionsModel;
 import Views.HomeView;
 
 /*
@@ -12,36 +11,16 @@ import Views.HomeView;
  *
  * @author gdpm
  */
-public class HomeController implements ControllerInterface{
-    
-    TransactionsModel model;
+public class HomeController extends MainController implements ControllerInterface{
     
     public HomeController(){
-        model = new TransactionsModel();
+        
     }
     
     public void index(){
         String title = "FinTrack | Home";
         
-        HomeView home = new HomeView(title);
-    }
-    
-    public void transactions(){
-     
-        System.out.println("\nHello transactions!\n");
-        
-        Object[][] modelData = model.fetch(null, null);
-        
-        System.out.println("modelData: "+modelData.length);
-        //System.out.println("modelData2: "+modelData[0].length);
-        if(modelData.length > 0)
-            for(int i = 0; i < modelData.length; i++){
-                for(int j = 0; j < modelData[i].length; j++){
-                    System.out.println("Data: "+modelData[i][j].toString());
-                }
-            }
-        
-    }
-    
+        this.loadView("Home");
+    } 
     
 }

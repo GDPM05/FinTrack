@@ -49,6 +49,12 @@
             <artifactId>javafx-controls</artifactId>
             <version>20.0.2</version> <!-- Ajusta para a versão desejada -->
         </dependency>
+        <dependency>
+            <groupId>com.sun.istack</groupId>
+            <artifactId>istack-commons-runtime</artifactId>
+            <version>4.2.0</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
 </project>

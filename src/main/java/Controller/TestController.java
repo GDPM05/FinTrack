@@ -5,18 +5,14 @@
 package Controller;
 
 import Views.TestView;
-import Model.TransactionsModel;
 /**
  *
  * @author gdpm
  */
-public class TestController implements ControllerInterface{
+public class TestController extends MainController implements ControllerInterface{
     
-    private TransactionsModel model;
     
     public TestController(){
-        System.out.println("Controller Incializado!");
-        model = new TransactionsModel();
     }
     
     public void index(){

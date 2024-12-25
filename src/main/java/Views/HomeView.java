@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
-public class HomeView extends MainView {
+public class HomeView extends MainView implements ViewInterface{
     
     JFrame frame;
     

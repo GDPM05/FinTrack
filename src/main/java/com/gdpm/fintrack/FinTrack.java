@@ -5,6 +5,7 @@
 package com.gdpm.fintrack;
 
 import App.Database;
+import App.App;
 import Controller.MainController;
 import java.net.URISyntaxException;
 /**
@@ -16,7 +17,7 @@ public class FinTrack {
     public static void main(String[] args) {
         System.out.println("Hello World!");
         
-        MainController mc = MainController.getInstance();
+        App app = App.getInstance();
         
         String teste1 = "MainController.java";
         String teste2 = "ControllerInterface.java";
@@ -30,7 +31,7 @@ public class FinTrack {
         
         //System.out.println("Teste1 contains? \n"+(teste1.contains("Manin"))+"\nTeste2 contains? \n"+(teste2.contains("Interface")));
         
-        mc.callRoute("home", null);
+        app.callRoute("home", null);
         
         //mc.callRoute("test2", null);
         

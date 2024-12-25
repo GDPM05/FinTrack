@@ -17,7 +17,7 @@ import javax.swing.JPanel;
  *
  * @author gdpm
  */
-public class TestView extends MainView{;
+public class TestView extends MainView implements ViewInterface{;
     
     private JFrame frame;
         

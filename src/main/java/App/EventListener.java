@@ -20,7 +20,7 @@ public class EventListener implements ActionListener{
 
     private String route;
     private String[] params;
-    private MainController mc = MainController.getInstance();
+    private App app = App.getInstance();
     
     public EventListener(String route, int n_fields){
         this.route = route;
@@ -33,7 +33,7 @@ public class EventListener implements ActionListener{
         
         if(params.length < 0){
             // Calls the method "CallRoute" from the main controller
-            mc.callRoute(route, null);
+            app.callRoute(route, null);
             return;
         }
         
@@ -54,7 +54,7 @@ public class EventListener implements ActionListener{
             }   
         }
         
-        mc.callRoute(route, params);
+        app.callRoute(route, params);
         
     }
     
