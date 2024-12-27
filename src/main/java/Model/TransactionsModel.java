@@ -1,24 +1,18 @@
-package Controller;
-
-import Views.HomeView;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+package Model;
 
 /**
  *
  * @author gdpm
  */
-public class HomeController extends MainController implements ControllerInterface{
+public class TransactionsModel extends MainModel{
     
-    public HomeController(){
-        
+    public TransactionsModel(){
+        this.table = "transactions";
+        this.key = "id";    
     }
-    
-    public void index(){        
-        this.loadView("Home");
-    } 
     
 }

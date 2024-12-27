@@ -5,8 +5,11 @@
 package App;
 
 import Controller.ControllerInterface;
+import Views.MainView;
+import Views.ViewInterface;
 
 import com.sun.istack.Nullable;
+import java.awt.Component;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -43,6 +46,7 @@ public class App {
     private Router router;
     private List<ControllerInterface> controllers = new ArrayList<>();
     private Map<String, Integer> controllers_map = new HashMap<>();
+    private MainView page;
     
     private App(){
         
@@ -85,37 +89,41 @@ public class App {
             // DirectoryStream to iterate through the controllers
             DirectoryStream<Path> stream = Files.newDirectoryStream(dir);
             
-            for(Path file: stream){
-                System.out.println("Current file: "+file.getFileName());
-                
+            for (Path file : stream) {
+                System.out.println("Current file: " + file.getFileName());
+
                 String fileName = file.getFileName().toString().substring(0, (file.getFileName().toString().length() - 6));
-                
+
                 // Check if the current file is not the controllers interface or the main controller
-                if(fileName.contains("Interface") || fileName.contains("Main"))
+                if (fileName.contains("Interface") || fileName.contains("Main"))
                     continue;
-                
-                // To load a class dynamically we need the classes fully qualified name
+
+                // To load a class dynamically we need the class's fully qualified name
                 String className = "Controller." + fileName;
-                
-                try{
+
+                try {
                     Class<?> currentClass = Class.forName(className);
-                    
-                    if(ControllerInterface.class.isAssignableFrom(currentClass)){
+
+                    if (ControllerInterface.class.isAssignableFrom(currentClass)) {
                         ControllerInterface controller = (ControllerInterface) currentClass.getDeclaredConstructor().newInstance();
-                        System.out.println("Current class -> 104: "+className);
+                        System.out.println("Current class -> 104: " + className);
                         controllers.add(controller);
-                        System.out.println("Class Name: "+className+"\nLast class in List: "+controllers.get(controllers.size() - 1).getClass().getName());
-                        controllers_map.put(className, controllers.size()-1);
-                        System.out.println("Last map: "+controllers_map.get(className));
+                        System.out.println("Class Name: " + className + "\nLast class in List: " + controllers.get(controllers.size() - 1).getClass().getName());
+                        controllers_map.put(className, controllers.size() - 1);
+                        System.out.println("Last map: " + controllers_map.get(className));
                     }
-                }catch(ClassNotFoundException e){
-                    System.out.println("Class not found: "+e.getMessage());
-                }catch(ClassCastException e){
-                    System.out.println("Class conversion error: "+e.getMessage());
-                }catch(Exception e){
-                    System.out.println("General Error: "+e.getMessage());
+                } catch (ClassNotFoundException e) {
+                    System.out.println("Class not found: " + className);
+                    return;
+                } catch (ClassCastException e) {
+                    System.out.println("Class conversion error: " + e.getMessage());
+                    return;
+                } catch (Exception e) {
+                    System.out.println("General Error: " + e.getMessage());
+                    return;
                 }
             }
+
         }catch(IOException | DirectoryIteratorException x){
             System.err.println("Error: "+x);
             
@@ -205,6 +213,16 @@ public class App {
     
     private void config(){
         this.router.map_routes(Config.routes);
+        
+        this.page = new MainView();
+    }
+    
+    public void loadPage(Object instance, String instanceName){
+        
+        if(null == instance || !(instance instanceof ViewInterface))
+            return;
+        
+        this.page.mainPanel.add((Component) instance, instanceName);
     }
     
     

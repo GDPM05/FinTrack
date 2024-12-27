@@ -22,7 +22,7 @@ public class TestView extends MainView implements ViewInterface{;
     private JFrame frame;
         
     public TestView(String title){
-        frame = prepareWindow(title);
+        //frame = prepareWindow(title);
         GUI();
     }
     

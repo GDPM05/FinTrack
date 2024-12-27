@@ -7,6 +7,8 @@ package Controller;
 import Views.ViewInterface;
 import java.lang.reflect.InvocationTargetException;
 
+import App.App;
+
 /**
  *
  * @author gdpm
@@ -14,7 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 public class MainController {
     
     protected String title;
-    
+    private App app = App.getInstance();
     
     protected void loadView(String viewName){
         
@@ -24,6 +26,8 @@ public class MainController {
             Class<?> view = Class.forName(classFullName);
             
             Object instance = (ViewInterface) view.getDeclaredConstructor().newInstance();
+            
+            app.loadPage(instance, viewName);
             
             System.out.println("View instance created: "+instance);
         }catch(Exception e){

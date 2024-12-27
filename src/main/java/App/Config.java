@@ -21,7 +21,9 @@ public class Config {
         {"teste", "GET", "TestController/index"},
         {"test2", "GET", "TestController/test2"},
         {"post_test", "POST", "TestController/test3"},
-        {"transactions", "GET", "HomeController/transactions"}
+        {"transactions", "GET", "TransactionsController/index"},
+        {"accounts", "GET", "AccountsController/index"},
+        {"goals", "GET", "GoalsController/index"}
     };
     
 }

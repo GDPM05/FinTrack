@@ -1,103 +1,62 @@
 package Views;
 
+import javax.swing.*;
+import java.awt.*;
 import App.EventListener;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
 
-public class HomeView extends MainView implements ViewInterface{
+public class HomeView extends JPanel {
     
-    JFrame frame;
-    
-    public HomeView(String title) {
-        frame = prepareWindow("FinTrack | Home");
-        GUI();
-    }
-    
-    private void GUI() {
+    public HomeView() {
+        // Definindo o layout para o painel
+        setLayout(new BorderLayout());
 
-        // Set the layout of the JFrame as BorderLayout
-        frame.setLayout(new BorderLayout());
-
-        // Creating the title
+        // Criando o título
         JLabel title = new JLabel("Welcome to FinTrack!", JLabel.CENTER);
-        title.setFont(TITLE_FONT);
+        title.setFont(new Font("Arial", Font.BOLD, 24));
 
-        // Creating the title panel
+        // Adicionando o título no topo
         JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
-        titlePanel.setBorder(new EmptyBorder(10, 10, 10, 10));  // Panel margin
-        titlePanel.add(title);  // Adding the title to the panel
-        //titlePanel.setBackground(Color.BLUE);
+        titlePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));  // Margem
+        titlePanel.add(title);  // Adiciona o título no painel
+        add(titlePanel, BorderLayout.NORTH);  // Adiciona o título ao topo (North) da tela
 
-        // Adding the title to the top (North) of the frame
-        frame.add(titlePanel, BorderLayout.NORTH);
-
-        // Creating the buttons panel
+        // Criando o painel de botões
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
-        buttonsPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        buttonsPanel.setPreferredSize(new java.awt.Dimension(frame.getWidth(), frame.getHeight() / 3));
+        buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        buttonsPanel.setPreferredSize(new Dimension(400, 300)); // Ajusta o tamanho do painel de botões
 
-        //buttonsPanel.add(Box.createVerticalGlue());
-
-        // Creating the buttons
+        // Criando os botões
         JButton transactions = new JButton("Transactions");
         JButton accounts = new JButton("Accounts");
         JButton goals = new JButton("Goals");
 
-        // Setting margins for the buttons
+        // Ajustando o alinhamento dos botões
         transactions.setAlignmentX(JButton.LEFT_ALIGNMENT);
         accounts.setAlignmentX(JButton.LEFT_ALIGNMENT);
         goals.setAlignmentX(JButton.LEFT_ALIGNMENT);
-        
+
+        // Adicionando os listeners aos botões
         transactions.addActionListener(new EventListener("transactions", 0));
-        
-        buttonsPanel.add(Box.createVerticalGlue()); // Flexible space to center the buttons
+        accounts.addActionListener(new EventListener("accounts", 0));
+        goals.addActionListener(new EventListener("goals", 0));
+
+        // Adicionando os botões ao painel
         buttonsPanel.add(transactions);
-        buttonsPanel.add(Box.createVerticalStrut(10)); // Space between buttons
+        buttonsPanel.add(Box.createVerticalStrut(10)); // Espaço entre os botões
         buttonsPanel.add(accounts);
-        buttonsPanel.add(Box.createVerticalStrut(10));
+        buttonsPanel.add(Box.createVerticalStrut(10)); // Espaço entre os botões
         buttonsPanel.add(goals);
-        buttonsPanel.add(Box.createVerticalGlue()); // Flexible space to keep the buttons centered
+        buttonsPanel.add(Box.createVerticalGlue()); // Espaço flexível para manter os botões centralizados
 
+        // Adicionando o painel de botões ao centro da tela
+        add(buttonsPanel, BorderLayout.CENTER);
 
-        //buttonsPanel.setBackground(Color.WHITE);
-
-        JPanel fillerTop = new JPanel();
-        fillerTop.setPreferredSize(new java.awt.Dimension(frame.getWidth(), frame.getHeight() / 3));
-        fillerTop.setBackground(Color.CYAN);
-        
+        // Criando o painel de rodapé, com fundo colorido para visualização
         JPanel fillerBottom = new JPanel();
-        fillerBottom.setPreferredSize(new java.awt.Dimension(frame.getWidth(), frame.getHeight() / 3));
+        fillerBottom.setPreferredSize(new Dimension(getWidth(), 100));
         fillerBottom.setBackground(Color.ORANGE);
-        
-        // Creating the bottom panel to adjust height
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new BorderLayout());
-        bottomPanel.add(fillerTop, BorderLayout.NORTH);
-        bottomPanel.add(buttonsPanel); // Buttons on the left
-        bottomPanel.add(fillerBottom, BorderLayout.SOUTH);
-        bottomPanel.setPreferredSize(new java.awt.Dimension(frame.getWidth() / 3, frame.getHeight()-titlePanel.getHeight())); // Height = 1/3 of the window
-        //bottomPanel.setBackground(Color.RED);
-
-        // Adding the bottom panel to the center
-        frame.add(bottomPanel, BorderLayout.CENTER);
-
-        // Make the window visible
-        frame.setVisible(true);
-        
-        // Using SwingUtilities.invokeLater to ensure that the heights are calculated after the window layout is done
-        SwingUtilities.invokeLater(() -> {
-            System.out.println("Top filler height: " + fillerTop.getHeight() + "\nBottom filler height: " + fillerBottom.getHeight());
-        });
+        add(fillerBottom, BorderLayout.SOUTH); // Adiciona o rodapé
     }
-
 }
