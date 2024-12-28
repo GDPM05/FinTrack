@@ -14,7 +14,7 @@ import java.net.URISyntaxException;
  * @author gdpm
  */
 public class FinTrack {
-
+    
     public static void main(String[] args) {
         System.out.println("Hello World!");
         
@@ -26,7 +26,8 @@ public class FinTrack {
         }
         
         App app = App.getInstance();
-        
+        app.getControllers();
+        //App app2 = App.getInstance();
         String teste1 = "MainController.java";
         String teste2 = "ControllerInterface.java";
         

@@ -7,7 +7,7 @@ package Controller;
 import Views.ViewInterface;
 import java.lang.reflect.InvocationTargetException;
 
-import App.App;
+import App.*;
 
 /**
  *
@@ -32,7 +32,7 @@ public class MainController {
             String classFullName = "Views." + viewName + "View";
             Class<?> view = Class.forName(classFullName);
             Object instance = (ViewInterface) view.getDeclaredConstructor().newInstance();
-            //app.loadPage(instance, classFullName);
+            app.loadPage(instance, classFullName);
         } catch (Exception e) {
             e.printStackTrace();
         }

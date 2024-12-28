@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 public class App {
     
     /**
-     * To ensure that the MainController has only one instance throughout the application and that this instance is 
+     * To ensure that the App has only one instance throughout the application and that this instance is 
      * globally accessible, I implemented it using the Singleton design pattern.
      */
     
@@ -57,16 +57,14 @@ public class App {
         System.out.println("Class name: \n - Class: "+className + "\n - Method name: "+methodName);
         System.out.println("<----------------------------------------- Construtor App chamado. ----------------------------------------->");
         // Method responsible for kickstarting our application
+        System.out.println("ClassLoader: " + App.class.getClassLoader());
         this.prepare();
     }
         
     private void prepare(){
         // Initializes the database
         db = Database.getInstance();
-        
-        // Initializes and stores the controllers
-        getControllers();
-        
+                
         // Initializes the router
         this.router = new Router();
         
@@ -74,7 +72,7 @@ public class App {
         config();
     }
     
-    public static App getInstance(){
+    public static synchronized App getInstance(){
         StackTraceElement[] stackTree = Thread.currentThread().getStackTrace();
         
         String className = stackTree[2].getClassName();
@@ -84,14 +82,18 @@ public class App {
         if(instance == null) {
             synchronized (App.class) {
                 if(instance == null) {
+                    System.out.println("Antes: " + instance);
                     instance = new App();
+                    System.out.println("Depois: " + instance);
+
                 }
             }
         }
         return instance;
     }
 
-    private void getControllers(){
+    public void getControllers(){
+        System.out.println("Instance: "+(instance != null));
         try{
             // Controllers folder
             Path dir = Path.of(getClass().getClassLoader().getResource("Controller").toURI());
@@ -230,12 +232,12 @@ public class App {
         this.page = (page == null) ? new MainView() : this.page;
     }
     
-    public void loadPage(Object instance, String instanceName){
+    public void loadPage(Object ViewInstance, String instanceName){
         
-        if(null == instance || !(instance instanceof ViewInterface))
+        if(null == ViewInstance || !(ViewInstance instanceof ViewInterface))
             return;
         
-        this.page.addComponent(instance, instanceName);
+        this.page.addComponent(ViewInstance, instanceName);
     }
     
     

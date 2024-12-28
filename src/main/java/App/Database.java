@@ -125,16 +125,17 @@ public class Database {
         }
     }
         
-        public static Database getInstance(){
-            if(instance == null) {
-                synchronized (Database.class) {
-                    if(instance == null) {
-                        instance = new Database();
-                    }
+    public static Database getInstance(){
+        if(instance == null) {
+            synchronized (Database.class) {
+                if(instance == null) {
+                    instance = new Database();
+                    System.out.println("Db instance: "+(instance != null));
                 }
             }
-            return instance;
         }
+        return instance;
+    }
 
     
     private boolean executeNonQuery(String query){

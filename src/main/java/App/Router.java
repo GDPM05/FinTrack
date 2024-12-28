@@ -18,7 +18,6 @@ public class Router {
     public void map_routes(String[][] routes){
         // Iterates over the routes to map them
         for(int i = 0; i < routes.length; i++){
-            System.out.println("Route do xebas: "+routes[i][0]+" index: "+i);
             route_map.put(routes[i][0], i);
         }
         
