@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import App.EventListener;
 
-public class HomeView extends JPanel {
+public class HomeView extends JPanel implements ViewInterface{
     
     public HomeView() {
         // Definindo o layout para o painel

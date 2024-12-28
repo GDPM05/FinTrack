@@ -12,6 +12,7 @@ public class MainView {
     private CardLayout cardLayout;
 
     public MainView() {
+        
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1240, 800);
@@ -33,4 +34,10 @@ public class MainView {
     public void showView(String viewName) {
         cardLayout.show(mainPanel, viewName);
     }
+    
+    public void addComponent(Object instance, String instanceName){
+        mainPanel.add((Component) instance, instanceName);
+        showView(instanceName);
+    }
+    
 }

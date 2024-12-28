@@ -14,11 +14,12 @@ import Views.HomeView;
 public class HomeController extends MainController implements ControllerInterface{
     
     public HomeController(){
-        
+        super();
+        System.out.println("////// HomeController Constructor Called /////////");
     }
     
     public void index(){        
-        this.loadView("Home");
+        loadView("Home");
     } 
     
 }

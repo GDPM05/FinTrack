@@ -49,7 +49,13 @@ public class App {
     private MainView page;
     
     private App(){
+        StackTraceElement[] stackTree = Thread.currentThread().getStackTrace();
         
+        String className = stackTree[2].getClassName();
+        String methodName = stackTree[2].getMethodName();
+        
+        System.out.println("Class name: \n - Class: "+className + "\n - Method name: "+methodName);
+        System.out.println("<----------------------------------------- Construtor App chamado. ----------------------------------------->");
         // Method responsible for kickstarting our application
         this.prepare();
     }
@@ -69,6 +75,12 @@ public class App {
     }
     
     public static App getInstance(){
+        StackTraceElement[] stackTree = Thread.currentThread().getStackTrace();
+        
+        String className = stackTree[2].getClassName();
+        String methodName = stackTree[2].getMethodName();
+        
+        System.out.println("Class b name: \n - Class: "+className + "\n - Method name: "+methodName);
         if(instance == null) {
             synchronized (App.class) {
                 if(instance == null) {
@@ -80,22 +92,22 @@ public class App {
     }
 
     private void getControllers(){
-               
         try{
-            
             // Controllers folder
             Path dir = Path.of(getClass().getClassLoader().getResource("Controller").toURI());
-            
+
             // DirectoryStream to iterate through the controllers
             DirectoryStream<Path> stream = Files.newDirectoryStream(dir);
-            
+
             for (Path file : stream) {
                 System.out.println("Current file: " + file.getFileName());
 
+                System.out.println("Filaenme: "+file.getFileName().toString().substring(0, (file.getFileName().toString().length() - 6)));
+                
                 String fileName = file.getFileName().toString().substring(0, (file.getFileName().toString().length() - 6));
-
+                
                 // Check if the current file is not the controllers interface or the main controller
-                if (fileName.contains("Interface") || fileName.contains("Main"))
+                if (fileName.contains("Interface") || fileName.equals("MainController"))
                     continue;
 
                 // To load a class dynamically we need the class's fully qualified name
@@ -126,11 +138,12 @@ public class App {
 
         }catch(IOException | DirectoryIteratorException x){
             System.err.println("Error: "+x);
-            
+
         } catch (URISyntaxException ex) {
             System.out.println("Error getting controllers path: "+ex.getMessage());
         }
     }
+
     
     public void callRoute(String route, @Nullable String[] params){
         
@@ -214,7 +227,7 @@ public class App {
     private void config(){
         this.router.map_routes(Config.routes);
         
-        this.page = new MainView();
+        this.page = (page == null) ? new MainView() : this.page;
     }
     
     public void loadPage(Object instance, String instanceName){
@@ -222,7 +235,7 @@ public class App {
         if(null == instance || !(instance instanceof ViewInterface))
             return;
         
-        this.page.mainPanel.add((Component) instance, instanceName);
+        this.page.addComponent(instance, instanceName);
     }
     
     

@@ -8,9 +8,9 @@ package Controller;
  *
  * @author jpfa0
  */
-public class TransactionsController {
+public class AccountsController {
     
-    public TransactionsController(){
+    public AccountsController(){
         
     }
     

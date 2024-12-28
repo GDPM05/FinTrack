@@ -14,25 +14,27 @@ import App.App;
  * @author gdpm
  */
 public class MainController {
-    
     protected String title;
-    private App app = App.getInstance();
-    
-    protected void loadView(String viewName){
+    private App app;
+    public MainController() {
+        StackTraceElement[] stackTree = Thread.currentThread().getStackTrace();
         
-        try{
-            String classFullName = "Views."+viewName+"View";
-            
+        String className = stackTree[2].getClassName();
+        String methodName = stackTree[2].getMethodName();
+        
+        System.out.println("Class name: \n - Class: "+className + "\n - Method name: "+methodName);
+        System.out.println("MainController constructor called");
+        app = App.getInstance();
+    }
+
+    protected void loadView(String viewName) {
+        try {
+            String classFullName = "Views." + viewName + "View";
             Class<?> view = Class.forName(classFullName);
-            
             Object instance = (ViewInterface) view.getDeclaredConstructor().newInstance();
-            
-            app.loadPage(instance, viewName);
-            
-            System.out.println("View instance created: "+instance);
-        }catch(Exception e){
+            //app.loadPage(instance, classFullName);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
 }

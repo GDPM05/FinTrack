@@ -7,6 +7,7 @@ package com.gdpm.fintrack;
 import App.Database;
 import App.App;
 import Controller.MainController;
+import java.awt.*;
 import java.net.URISyntaxException;
 /**
  *
@@ -16,6 +17,13 @@ public class FinTrack {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
+        
+        
+        if (GraphicsEnvironment.isHeadless()) {
+            System.out.println("Modo headless ativo. Ambiente gráfico não disponível.");
+        } else {
+            System.out.println("Ambiente gráfico disponível.");
+        }
         
         App app = App.getInstance();
         
@@ -39,3 +47,4 @@ public class FinTrack {
         
     }
 }
+
