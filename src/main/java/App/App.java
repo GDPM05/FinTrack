@@ -10,6 +10,8 @@ import Views.ViewInterface;
 
 import com.sun.istack.Nullable;
 import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -232,7 +234,7 @@ public class App {
         this.page = (page == null) ? new MainView() : this.page;
     }
     
-    public void loadPage(Object ViewInstance, String instanceName){
+    public void loadPage(ViewInterface ViewInstance, String instanceName){
         
         if(null == ViewInstance || !(ViewInstance instanceof ViewInterface))
             return;

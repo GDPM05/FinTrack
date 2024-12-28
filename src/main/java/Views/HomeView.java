@@ -7,6 +7,9 @@ import App.EventListener;
 public class HomeView extends JPanel implements ViewInterface{
     
     public HomeView() {
+        
+        System.out.println("Home view called.");
+        
         // Definindo o layout para o painel
         setLayout(new BorderLayout());
 

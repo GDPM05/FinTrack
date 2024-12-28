@@ -30,8 +30,9 @@ public class MainController {
     protected void loadView(String viewName) {
         try {
             String classFullName = "Views." + viewName + "View";
+            System.out.println("View name: "+classFullName);
             Class<?> view = Class.forName(classFullName);
-            Object instance = (ViewInterface) view.getDeclaredConstructor().newInstance();
+            ViewInterface instance = (ViewInterface) view.getDeclaredConstructor().newInstance();
             app.loadPage(instance, classFullName);
         } catch (Exception e) {
             e.printStackTrace();
