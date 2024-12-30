@@ -1,5 +1,6 @@
 package Views;
 
+import App.EventListener;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.plaf.basic.BasicArrowButton;
@@ -56,6 +57,9 @@ public class MainView {
         previous.setPreferredSize(new Dimension(70, 70));
         next.setPreferredSize(new Dimension(70, 70));
 
+        previous.addActionListener(new EventListener("systemPrev", 0));
+        next.addActionListener(new EventListener("systemNext", 0));
+        
         // Adicionando os botões ao painel
         buttonsPanel.add(previous, BorderLayout.WEST);
         buttonsPanel.add(next, BorderLayout.EAST);

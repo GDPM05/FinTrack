@@ -27,6 +27,7 @@ public class FinTrack {
         
         App app = App.getInstance();
         app.getControllers();
+        app.config();
         //App app2 = App.getInstance();
         String teste1 = "MainController.java";
         String teste2 = "ControllerInterface.java";

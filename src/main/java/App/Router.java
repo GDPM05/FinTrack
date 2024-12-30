@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class Router {
     
-    Map<String, Integer> route_map = new HashMap<>();    
+    Map<String, Integer> route_map = new HashMap<>();   
     
     public void map_routes(String[][] routes){
         // Iterates over the routes to map them

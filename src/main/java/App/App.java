@@ -50,6 +50,10 @@ public class App {
     private Map<String, Integer> controllers_map = new HashMap<>();
     private MainView page;
     
+    private ArrayList<String> lastRoutes = new ArrayList<>() ;
+    
+    private int tempRoutesIndex = 0;
+    
     private App(){
         StackTraceElement[] stackTree = Thread.currentThread().getStackTrace();
         
@@ -69,9 +73,6 @@ public class App {
                 
         // Initializes the router
         this.router = new Router();
-        
-        // Starts the app configuration
-        config();
     }
     
     public static synchronized App getInstance(){
@@ -158,10 +159,19 @@ public class App {
         
         System.out.println("Route caller: \n - Class: "+className + "\n - Method name: "+methodName);
         
-        
         System.out.println("Route: "+route);
         if(route == null || route.equals(""))
             return;
+        
+        if(route.contains("system")){
+            String operation = route.substring(6, route.length());
+            
+            System.out.println("Operation: "+operation);
+            
+            this.executeSystemOperation(operation);
+            
+            return;
+        }
         
         int route_index = this.router.find_route(route);
         
@@ -207,6 +217,8 @@ public class App {
                 
                 // Iboke the method from the class, no arguments
                 method.invoke(controllerInstance);
+                
+                lastRoutes.add(route);
             }
             
             System.out.println("Method successfully executed. "+method_name);
@@ -228,7 +240,7 @@ public class App {
         }
     }
     
-    private void config(){
+    public void config(){
         this.router.map_routes(Config.routes);
         
         this.page = (page == null) ? new MainView() : this.page;
@@ -240,6 +252,23 @@ public class App {
             return;
         
         this.page.addComponent(ViewInstance, instanceName);
+    }
+
+    private void executeSystemOperation(String operation) {
+        
+        System.out.println("Called\n"+lastRoutes.get(lastRoutes.size()-1));
+       
+        switch(operation){
+            case "Prev":
+                System.out.println("Last route: "+lastRoutes.get(lastRoutes.size()-(tempRoutesIndex-=2)));
+                callRoute(lastRoutes.get(lastRoutes.size()-2), null);
+                lastRoutes.remove(lastRoutes.size()-1);
+                break;
+            case "Next":
+                
+                break;
+        }
+        
     }
     
     
