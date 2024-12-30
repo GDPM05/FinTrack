@@ -17,5 +17,13 @@ public class TransactionsController extends MainController implements Controller
     public void index(){
         loadView("Transactions");
     }
+ 
+    public void sayHello(){
+        
+        System.out.println("Hello!");
+        
+        redirect("transactions", null);
+        
+    }
     
 }

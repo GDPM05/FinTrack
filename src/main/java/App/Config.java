@@ -23,7 +23,8 @@ public class Config {
         {"post_test", "POST", "TestController/test3"},
         {"transactions", "GET", "TransactionsController/index"},
         {"accounts", "GET", "AccountsController/index"},
-        {"goals", "GET", "GoalsController/index"}
+        {"goals", "GET", "GoalsController/index"},
+        {"nextroute", "GET", "TransactionsController/sayHello"}
     };
     
 }

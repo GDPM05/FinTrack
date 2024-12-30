@@ -38,4 +38,8 @@ public class MainController {
             e.printStackTrace();
         }
     }
+    
+    protected void redirect(String route, String[] params){
+        app.callRoute(route, params);
+    }
 }

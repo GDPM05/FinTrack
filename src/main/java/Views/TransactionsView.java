@@ -4,7 +4,9 @@
  */
 package Views;
 
+import App.EventListener;
 import java.awt.BorderLayout;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
@@ -17,6 +19,10 @@ public class TransactionsView extends JPanel implements ViewInterface{
         
         setLayout(new BorderLayout());
         
+        JButton nextRoute = new JButton("Next Route");
+        nextRoute.addActionListener(new EventListener("nextroute", 0));
+        
+        add(nextRoute);
     }
     
 }

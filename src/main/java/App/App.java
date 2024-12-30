@@ -50,9 +50,13 @@ public class App {
     private Map<String, Integer> controllers_map = new HashMap<>();
     private MainView page;
     
-    private ArrayList<String> lastRoutes = new ArrayList<>() ;
+    private ArrayList<String> lastPrevRoutes = new ArrayList<>() ;
+    private ArrayList<String> lastNextRoutes = new ArrayList<>();
     
-    private int tempRoutesIndex = 0;
+    private String currentRoute;
+    
+    private int tempPrevRoutesIndex = 0;
+    private int tempNextRouteIndex = 0;
     
     private App(){
         StackTraceElement[] stackTree = Thread.currentThread().getStackTrace();
@@ -171,6 +175,10 @@ public class App {
             this.executeSystemOperation(operation);
             
             return;
+        }else{
+            currentRoute = route;
+        
+            System.out.println("Current route: "+currentRoute);
         }
         
         int route_index = this.router.find_route(route);
@@ -218,7 +226,11 @@ public class App {
                 // Iboke the method from the class, no arguments
                 method.invoke(controllerInstance);
                 
-                lastRoutes.add(route);
+                if(methodName != "executeSystemOperation"){
+                    System.out.println("Non system route called");
+                    lastPrevRoutes.add(route);
+                    tempPrevRoutesIndex = lastPrevRoutes.size() - 1;
+                }
             }
             
             System.out.println("Method successfully executed. "+method_name);
@@ -256,18 +268,24 @@ public class App {
 
     private void executeSystemOperation(String operation) {
         
-        System.out.println("Called\n"+lastRoutes.get(lastRoutes.size()-1));
+        //System.out.println("Called\n"+lastRoutes.get(lastRoutes.size()-1));
        
         switch(operation){
             case "Prev":
-                System.out.println("Last route: "+lastRoutes.get(lastRoutes.size()-2));
+                System.out.println("Last route: "+lastPrevRoutes.get(lastPrevRoutes.size()-2));
+                currentRoute = lastPrevRoutes.get(tempPrevRoutesIndex);
+                System.out.println("---------Current route:: "+currentRoute);
                 System.out.println("Teste");
-                String lastRoute = lastRoutes.get(lastRoutes.size() - 2);
+                String lastRoute = lastPrevRoutes.get(lastPrevRoutes.size() - tempPrevRoutesIndex-1);
+                lastNextRoutes.add(currentRoute);
                 callRoute(lastRoute, null);
-                lastRoutes.remove(lastRoutes.size()-1);
+                tempNextRouteIndex = lastNextRoutes.size() - 1;
                 break;
             case "Next":
-                
+                System.out.println("Next called.");
+                String nextRoute = lastNextRoutes.get(lastNextRoutes.size() - tempNextRouteIndex-1);
+                System.out.println("Next route: "+nextRoute);
+                callRoute(nextRoute, null);
                 break;
         }
         
