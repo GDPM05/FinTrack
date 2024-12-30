@@ -13,7 +13,7 @@ objetivo principal é apresentar uma aplicação bem estruturada, modular, e que
 
 # Funcionalidades do Projeto #
   1. Singleton para gestão da App e da  Base de dados:
-    - A classe `App` e Database, implementam o padrão de desenho Singleton, de forma a garantir que ambas as classes tenham apenas uma instância, o que é essencial visto que ambas classes são o núcelo da aplicação.
+    - A classe `App` e Database, implementam o padrão de desenho Singleton, de forma a garantir que ambas as classes tenham apenas uma instância, o que é essencial visto que ambas classes são o núcleo da aplicação.
   2. Sistema de Rotas:
     - A aplicação possui um sistema de rotas modular, o que possibilita a adição de novas rotas, sem a necessidade de alterar o código físico. Isto é feito com um ficheiro de configuração `config`, cujo consta com um array de rotas, onde
       cada rota é composta por um nome, um tipo (GET, POST) e o controlador/método a ser chamados.
