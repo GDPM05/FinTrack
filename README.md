@@ -1,3 +1,4 @@
+PT
 # FinTrack #
 
 O FinTrack é um projeto concebido para demonstrar de forma prática as minhas capacidades em programação, neste caso, Java. Segue o padrão MVC (Model - View - Controller), implementando uma série de funcionalidades, todas desenvolvidas do zero. O 
@@ -38,3 +39,52 @@ objetivo principal é apresentar uma aplicação bem estruturada, modular, e que
     `https://github.com/GDPM05/FinTrack.git`.
 2. Importe o projeto para o seu IDE de preferência.
 3. Compile e execute.
+
+EN
+# FinTrack
+
+The FinTrack project was designed to practically demonstrate my programming skills, particularly in Java. It follows the MVC (Model-View-Controller) pattern, implementing a variety of features entirely from scratch. The primary objective is to present a well-structured, modular application that highlights my ability to develop a complete system using best practices.
+
+## Technologies Used
+
+- **Programming Language:** Java
+- **Database:** SQLite (local database)
+- **Paradigm:** Object-Oriented Programming
+- **Architecture:** MVC (Model-View-Controller)
+- **Development Tools:** NetBeans IDE
+
+## Project Features
+
+1. **Singleton for Application and Database Management:**
+   - The `App` and `Database` classes implement the Singleton design pattern to ensure only one instance exists. This is essential as both classes serve as the core of the application.
+
+2. **Routing System:**
+   - The application features a modular routing system, allowing the addition of new routes without modifying the core code. This is achieved through a configuration file (`config`) containing an array of routes, where each route includes a name, type (GET, POST), and the corresponding controller/method to be called.
+
+3. **Dynamic Controller Configuration:**
+   - The `App` class includes a method to list and instantiate all controllers dynamically, again avoiding changes to the class code whenever a new controller is created.
+
+4. **Navigation Between Routes:**
+   - Supports navigation between pages.
+   - Includes a route history for "Back" and "Forward" functionalities.
+
+5. **Integration of Views:**
+   - The application dynamically loads visual components, offering greater flexibility in the user interface.
+
+## How It Works
+
+1. **Application Instance:** The application starts by instantiating the `App` class, which initializes the database, router, and controllers.
+2. **Routes and Navigation:** Routes are mapped in the `config` file and processed by the `Router` class. When calling a route with the `callRoute` method, the corresponding controller and action are invoked.
+3. **Controller Execution:**
+   - The system uses reflection to identify the methods to be executed in the controllers.
+   - Supports methods that accept parameters (e.g., via POST) or require no arguments.
+4. **Views and Components:** The application's main interface is managed by the `MainView` class, enabling the addition and manipulation of visual elements.
+
+## How to Run
+
+1. Clone the repository:
+    `git clone https://github.com/GDPM05/FinTrack.git`
+
+2. Import the project into your preferred IDE.
+3. Compile and run.
+
