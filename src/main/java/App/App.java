@@ -260,8 +260,10 @@ public class App {
        
         switch(operation){
             case "Prev":
-                System.out.println("Last route: "+lastRoutes.get(lastRoutes.size()-(tempRoutesIndex-=2)));
-                callRoute(lastRoutes.get(lastRoutes.size()-2), null);
+                System.out.println("Last route: "+lastRoutes.get(lastRoutes.size()-2));
+                System.out.println("Teste");
+                String lastRoute = lastRoutes.get(lastRoutes.size() - 2);
+                callRoute(lastRoute, null);
                 lastRoutes.remove(lastRoutes.size()-1);
                 break;
             case "Next":
