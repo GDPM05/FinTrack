@@ -161,6 +161,8 @@ public class App {
         String className = stackTree[2].getClassName();
         String methodName = stackTree[2].getMethodName();
         
+        router.updateCurrentRoute(route);
+        
         System.out.println("Route caller: \n - Class: "+className + "\n - Method name: "+methodName);
         
         System.out.println("Route: "+route);
