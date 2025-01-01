@@ -23,6 +23,11 @@ public class TransactionsView extends JPanel implements ViewInterface{
         nextRoute.addActionListener(new EventListener("nextroute", 0));
         
         add(nextRoute);
+        
+        JButton home = new JButton("home");
+        home.addActionListener(new EventListener("home", 0));
+        
+        add(home);
     }
     
 }

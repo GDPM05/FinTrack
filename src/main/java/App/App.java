@@ -161,8 +161,6 @@ public class App {
         String className = stackTree[2].getClassName();
         String methodName = stackTree[2].getMethodName();
         
-        router.updateCurrentRoute(route);
-        
         System.out.println("Route caller: \n - Class: "+className + "\n - Method name: "+methodName);
         
         System.out.println("Route: "+route);
@@ -232,6 +230,7 @@ public class App {
                     System.out.println("Non system route called");
                     lastPrevRoutes.add(route);
                     tempPrevRoutesIndex = lastPrevRoutes.size() - 1;
+                    router.updateCurrentRoute(route);
                 }
             }
             
@@ -274,18 +273,22 @@ public class App {
        
         switch(operation){
             case "Prev":
-                System.out.println("Last route: "+lastPrevRoutes.get(lastPrevRoutes.size()-2));
+                /*System.out.println("Last route: "+lastPrevRoutes.get(lastPrevRoutes.size()-2));
                 currentRoute = lastPrevRoutes.get(tempPrevRoutesIndex);
                 System.out.println("---------Current route:: "+currentRoute);
                 System.out.println("Teste");
                 String lastRoute = lastPrevRoutes.get(lastPrevRoutes.size() - tempPrevRoutesIndex-1);
-                lastNextRoutes.add(currentRoute);
+                lastNextRoutes.add(currentRoute);*/
+                String lastRoute = router.previousRoute();
+                System.out.println("Previous route: "+lastRoute);
                 callRoute(lastRoute, null);
                 tempNextRouteIndex = lastNextRoutes.size() - 1;
                 break;
             case "Next":
-                System.out.println("Next called.");
+                /*System.out.println("Next called.");
                 String nextRoute = lastNextRoutes.get(lastNextRoutes.size() - tempNextRouteIndex-1);
+                System.out.println("Next route: "+nextRoute);*/
+                String nextRoute = router.nextRoute();
                 System.out.println("Next route: "+nextRoute);
                 callRoute(nextRoute, null);
                 break;
