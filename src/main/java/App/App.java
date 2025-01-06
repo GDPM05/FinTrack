@@ -50,14 +50,6 @@ public class App {
     private Map<String, Integer> controllers_map = new HashMap<>();
     private MainView page;
     
-    private ArrayList<String> lastPrevRoutes = new ArrayList<>() ;
-    private ArrayList<String> lastNextRoutes = new ArrayList<>();
-    
-    private String currentRoute;
-    
-    private int tempPrevRoutesIndex = 0;
-    private int tempNextRouteIndex = 0;
-    
     private App(){
         StackTraceElement[] stackTree = Thread.currentThread().getStackTrace();
         
@@ -85,7 +77,7 @@ public class App {
         String className = stackTree[2].getClassName();
         String methodName = stackTree[2].getMethodName();
         
-        System.out.println("Class b name: \n - Class: "+className + "\n - Method name: "+methodName);
+        //System.out.println("Class b name: \n - Class: "+className + "\n - Method name: "+methodName);
         if(instance == null) {
             synchronized (App.class) {
                 if(instance == null) {
@@ -154,7 +146,7 @@ public class App {
     }
 
     
-    public void callRoute(String route, @Nullable String[] params){
+    public void callRoute(String route, @Nullable String[] params, @Nullable String[] caller){
         
         StackTraceElement[] stackTree = Thread.currentThread().getStackTrace();
         
@@ -163,36 +155,39 @@ public class App {
         
         System.out.println("Route caller: \n - Class: "+className + "\n - Method name: "+methodName);
         
-        System.out.println("Route: "+route);
+        //System.out.println("Route: "+route);
         if(route == null || route.equals(""))
             return;
         
         if(route.contains("system")){
             String operation = route.substring(6, route.length());
             
-            System.out.println("Operation: "+operation);
+            //System.out.println("Operation: "+operation);
             
             this.executeSystemOperation(operation);
             
             return;
-        }else{
-            currentRoute = route;
-        
-            System.out.println("Current route: "+currentRoute);
         }
         
         int route_index = this.router.find_route(route);
         
         String[] full_route = Config.routes[route_index];
             
-        System.out.println("Full route: "+Arrays.toString(full_route));
+        //System.out.println("Full route: "+Arrays.toString(full_route));
         
         String action = full_route[2];
         
-        System.out.println("Action: "+action);
+        //System.out.println("Action: "+action);
         
         String controller = "Controller."+action.split("/")[0];
         String method_name = action.split("/")[1];
+        
+        if(methodName != "executeSystemOperation"){
+            System.out.println("Non system route called");
+            //lastPrevRoutes.add(route);
+            //tempPrevRoutesIndex = lastPrevRoutes.size() - 1;
+            router.updateHistory(route, full_route[1], caller);
+        }
         
         try{
             
@@ -205,7 +200,7 @@ public class App {
             // Get the instance class
             Class<?> controllerClass = controllerInstance.getClass();
             
-            System.out.println("\nMethod name: "+method_name);
+            //System.out.println("\nMethod name: "+method_name);
             
             Method method;
             
@@ -225,13 +220,6 @@ public class App {
                 
                 // Iboke the method from the class, no arguments
                 method.invoke(controllerInstance);
-                
-                if(methodName != "executeSystemOperation"){
-                    System.out.println("Non system route called");
-                    lastPrevRoutes.add(route);
-                    tempPrevRoutesIndex = lastPrevRoutes.size() - 1;
-                    router.updateCurrentRoute(route);
-                }
             }
             
             System.out.println("Method successfully executed. "+method_name);
@@ -245,7 +233,7 @@ public class App {
             className = stackTree[2].getClassName();
             methodName = stackTree[2].getMethodName();
 
-            System.out.println("Route caller: \n - Class: "+className + "\n - Method name: "+methodName);
+            //System.out.println("Route caller: \n - Class: "+className + "\n - Method name: "+methodName);
             e.printStackTrace();
         } catch (Exception e) {
             System.err.println("Unexpected error: " + e.getMessage());
@@ -280,17 +268,16 @@ public class App {
                 String lastRoute = lastPrevRoutes.get(lastPrevRoutes.size() - tempPrevRoutesIndex-1);
                 lastNextRoutes.add(currentRoute);*/
                 String lastRoute = router.previousRoute();
-                System.out.println("Previous route: "+lastRoute);
-                callRoute(lastRoute, null);
-                tempNextRouteIndex = lastNextRoutes.size() - 1;
+                //System.out.println("Previous route: "+lastRoute);
+                callRoute(lastRoute, null, null);
                 break;
             case "Next":
                 /*System.out.println("Next called.");
                 String nextRoute = lastNextRoutes.get(lastNextRoutes.size() - tempNextRouteIndex-1);
                 System.out.println("Next route: "+nextRoute);*/
                 String nextRoute = router.nextRoute();
-                System.out.println("Next route: "+nextRoute);
-                callRoute(nextRoute, null);
+                //System.out.println("Next route: "+nextRoute);
+                callRoute(nextRoute, null, null);
                 break;
         }
         

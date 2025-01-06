@@ -41,27 +41,32 @@ public class MainView {
         // Configurando o layout do header
         header.setLayout(new BoxLayout(header, BoxLayout.X_AXIS));
         header.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        //header.setBackground(Color.BLUE);
+        // header.setBackground(Color.BLUE);
         header.setPreferredSize(new Dimension(1240, 40)); // Altura fixa do header
 
         // Criando o painel de botões
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new BorderLayout()); // Use BorderLayout para alinhar botões
-        buttonsPanel.setPreferredSize(new Dimension(100, 40)); // Altura e largura fixas
+        buttonsPanel.setPreferredSize(new Dimension(200, 40)); // Altura e largura fixas
 
         // Criando os botões de navegação
         BasicArrowButton previous = new BasicArrowButton(BasicArrowButton.WEST);
         BasicArrowButton next = new BasicArrowButton(BasicArrowButton.EAST);
+        JButton home = new JButton("Home"); // Criando botão Home
 
         // Ajustando o tamanho dos botões
         previous.setPreferredSize(new Dimension(70, 70));
         next.setPreferredSize(new Dimension(70, 70));
+        home.setPreferredSize(new Dimension(70, 70));
 
+        // Adicionando listeners para os botões
         previous.addActionListener(new EventListener("systemPrev", 0));
         next.addActionListener(new EventListener("systemNext", 0));
-        
+        home.addActionListener(new EventListener("home", 0)); // Listener do botão Home
+
         // Adicionando os botões ao painel
         buttonsPanel.add(previous, BorderLayout.WEST);
+        buttonsPanel.add(home, BorderLayout.CENTER); // Botão Home centralizado
         buttonsPanel.add(next, BorderLayout.EAST);
 
         // Adicionando o painel de botões ao header
@@ -69,6 +74,7 @@ public class MainView {
 
         return header;
     }
+
 
     // Método para mudar de "página"
     public void showView(String viewName) {

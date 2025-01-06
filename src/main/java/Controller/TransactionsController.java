@@ -18,12 +18,17 @@ public class TransactionsController extends MainController implements Controller
         loadView("Transactions");
     }
  
-    public void sayHello(){
+    public void sayHello(String[] params){
         
         System.out.println("Hello!");
         
         redirect("transactions", null);
         
+    }
+    
+    public void sayGoodBye(String[] params){
+        System.out.println("Goddbye!");
+        redirect("transactions", null);
     }
     
 }

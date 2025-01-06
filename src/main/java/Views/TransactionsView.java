@@ -6,6 +6,9 @@ package Views;
 
 import App.EventListener;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -19,15 +22,23 @@ public class TransactionsView extends JPanel implements ViewInterface{
         
         setLayout(new BorderLayout());
         
-        JButton nextRoute = new JButton("Next Route");
-        nextRoute.addActionListener(new EventListener("nextroute", 0));
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
+        buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        buttonsPanel.setPreferredSize(new Dimension(400, 300)); // Ajusta o tamanho do painel de botões
+
+        // Criando os botões
+        JButton testButton1 = new JButton("TestButton 1");
+        JButton testButton2 = new JButton("TestButton 2");
+
+        testButton1.addActionListener(new EventListener("testRoute1", 0));
+        testButton2.addActionListener(new EventListener("testRoute2", 0));
         
-        add(nextRoute);
+        buttonsPanel.add(testButton1);
+        buttonsPanel.add(testButton2);
         
-        JButton home = new JButton("home");
-        home.addActionListener(new EventListener("home", 0));
+        add(buttonsPanel);
         
-        add(home);
     }
     
 }

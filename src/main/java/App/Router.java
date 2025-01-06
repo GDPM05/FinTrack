@@ -4,6 +4,7 @@
  */
 package App;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,11 +16,15 @@ public class Router {
     
     Map<String, Integer> route_map = new HashMap<>();   
     private String[] routesHistory;
+    private String[] routeTypeHistory;
+    private String[][] callerHistory;
     private String currentRoute;
-    private int currentIndex = 0;
+    private int currentIndex = -1;
     
     public Router(){
         routesHistory = new String[20];
+        routeTypeHistory = new String[20];
+        callerHistory = new String[20][2];
     }
     
     public void map_routes(String[][] routes){
@@ -32,59 +37,77 @@ public class Router {
     
     public int find_route(String route){return route_map.get(route);}
     
-    
-    
-    public void updateCurrentRoute(String route){
-        System.out.println("Current route: "+currentRoute);
+    public void updateHistory(String route, String routeType, String[] caller){
+     
+        currentIndex += 1;
         
-        // Check's if the currentRoute is different than the one before
-        if(route != currentRoute){
-            currentRoute = route;
-        }
-        // If the currentIndex is, in this case, 19, updates it to 19, to keep it in the boundaries and shift's all the routes 
-        if(currentIndex == routesHistory.length-1){
-            currentIndex = routesHistory.length- 1;
-            shiftHistory();
+        if(currentIndex == routesHistory.length - 1){
+            currentIndex = routesHistory.length - 1;
+            shiftRoutes();
         }
         
         routesHistory[currentIndex] = route;
-        System.out.println("Route History | Current Route: "+routesHistory[currentIndex]+"\nCurrent Index: "+currentIndex);
+        routeTypeHistory[currentIndex] = routeType;
         
-        currentIndex++;
+        callerHistory[currentIndex] = caller;
         
-        System.out.println("Current route: "+currentRoute);
+        System.out.println("Current index: "+currentIndex+"\nCurrent route in the index: "+routesHistory[currentIndex]);
+    }
+    
+    private boolean checkLoop(){
+        
+        String x = routesHistory[currentIndex];
+        String y = routesHistory[currentIndex-1];
+        String z = routesHistory[currentIndex-2];
+            
+        String[] callerX = callerHistory[currentIndex];
+        String[] callerY = callerHistory[currentIndex-1];
+        String[] callerZ = callerHistory[currentIndex-2];
+        
+        System.out.println("CallerX: "+callerX[0]+"\nCallerY: "+callerY[0]+"\nCallerZ: "+callerZ[0]);
+        
+        boolean xz = (x == z);
+        boolean yIsPost = (routeTypeHistory[currentIndex - 1] == "POST");
+        
+        System.out.println("xz: "+xz+"\nyCallsX: "+yIsPost);
+        
+        if(xz && yIsPost)
+            return true;
+        
+        return false;
+    }
+    
+    private void shiftRoutes(){
+        
+        for(int i = 0; i < routesHistory.length - 1; i++){
+            routesHistory[i] = routesHistory[i+1];
+            routeTypeHistory[i] = routeTypeHistory[i+1];
+        }
+        
     }
     
     public String nextRoute(){
-        System.out.println("Current 111 index: "+currentIndex);
         
-        if(routesHistory[currentIndex] != null && (currentIndex < routesHistory.length)){
-            return routesHistory[currentIndex];
-        }
+        if((currentIndex == routesHistory.length - 1) || (routesHistory[currentIndex+1] == null))
+            return null;
         
-        return null;
+        currentIndex += 1;
+        
+        return routesHistory[currentIndex];
     }
     
     public String previousRoute(){
         
-        currentIndex = (currentIndex-1 > 0) ? currentIndex-1 : 1;
+        if(currentIndex == 0)
+            return null;
         
-        return routesHistory[currentIndex-1];
+        if(currentIndex > 2)
+            currentIndex = (checkLoop()) ? currentIndex-2 : currentIndex-1;
+        else
+            currentIndex -= 1;
+        
+        return routesHistory[currentIndex];
     }
     
-    // Method responsible for shifting all the indexes to the left, once the maximum is suprassed
-    private void shiftHistory(){
-        
-        routesHistory[0] = null;
-        
-        // Goes through every index in the array
-        for(int i = 0; i < routesHistory.length; i++){
-            // Checks if it's not the last one
-            if(i != routesHistory.length - 1)
-                // Takes the next value and put into the current
-                routesHistory[i] = routesHistory[i+1];
-            
-        }
-    }
     
 }

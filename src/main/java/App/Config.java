@@ -24,7 +24,8 @@ public class Config {
         {"transactions", "GET", "TransactionsController/index"},
         {"accounts", "GET", "AccountsController/index"},
         {"goals", "GET", "GoalsController/index"},
-        {"nextroute", "GET", "TransactionsController/sayHello"}
+        {"testRoute1", "POST", "TransactionsController/sayHello"},
+        {"testRoute2", "POST", "TransactionsController/sayGoodBye"}
     };
     
 }

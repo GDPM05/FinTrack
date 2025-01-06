@@ -40,6 +40,18 @@ public class MainController {
     }
     
     protected void redirect(String route, String[] params){
-        app.callRoute(route, params);
+        String[] caller = new String[2];
+        
+        StackTraceElement[] stackTree = Thread.currentThread().getStackTrace();
+        
+        String className = stackTree[2].getClassName();
+        String methodName = stackTree[2].getMethodName();
+        
+        System.out.println("Caller redirect: "+className+" "+methodName);
+        
+        caller[0] = className;
+        caller[1] = methodName;
+        
+        app.callRoute(route, params, caller);
     }
 }

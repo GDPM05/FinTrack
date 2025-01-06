@@ -33,7 +33,7 @@ public class EventListener implements ActionListener{
         
         if(params.length < 0){
             // Calls the method "CallRoute" from the main controller
-            app.callRoute(route, null);
+            app.callRoute(route, null, null);
             return;
         }
         
@@ -54,7 +54,12 @@ public class EventListener implements ActionListener{
             }   
         }
         
-        app.callRoute(route, params);
+        StackTraceElement[] stackTree = Thread.currentThread().getStackTrace();
+        
+        String className = stackTree[2].getClassName();
+        String methodName = stackTree[2].getMethodName();
+        
+        app.callRoute(route, params, new String[]{className, methodName});
         
     }
     
