@@ -11,8 +11,10 @@ package Model;
 public class TransactionsModel extends MainModel{
     
     public TransactionsModel(){
+        super();
         this.table = "transactions";
-        this.key = "id";    
+        this.key = "id";
+        this.attributes = new String[]{"description", "value", "date", "type", "category_id"};
     }
     
 }

@@ -4,14 +4,19 @@
  */
 package Controller;
 
+import Model.TransactionsModel;
+import java.util.Arrays;
+
 /**
  *
  * @author jpfa0
  */
 public class TransactionsController extends MainController implements ControllerInterface {
     
+    private TransactionsModel model;
+    
     public TransactionsController(){
-        
+        model = new TransactionsModel();;
     }
     
     public void index(){
@@ -21,6 +26,10 @@ public class TransactionsController extends MainController implements Controller
     public void sayHello(String[] params){
         
         System.out.println("Hello!");
+        
+        String[] data = model.findById(1);
+        System.out.println("Data 0: "+data[0]);
+        //System.out.println("Returned data: "+Arrays.deepToString(data));
         
         redirect("transactions", null);
         

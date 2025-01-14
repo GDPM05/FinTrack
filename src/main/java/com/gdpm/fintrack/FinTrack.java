@@ -18,6 +18,7 @@ public class FinTrack {
     public static void main(String[] args) {
         System.out.println("Hello World!");
         
+        //System.out.println("Teste join: "+String.join(", ", new String[]{"ola", "tudo", "bem"}));
         
         if (GraphicsEnvironment.isHeadless()) {
             System.out.println("Modo headless ativo. Ambiente gráfico não disponível.");
