@@ -22,7 +22,17 @@ public class TransactionsController extends MainController implements Controller
     public void index(){
         loadView("Transactions");
     }
- 
+    
+    public void newTransactionsMenu(){
+        loadView("NewTransaction");
+    }
+    
+    public void newTransaction(String[] params){
+        System.out.println("Data: "+Arrays.toString(params));
+        
+        model.insert(null, params);        
+    }
+    
     public void sayHello(String[] params){
         
         System.out.println("Hello!");

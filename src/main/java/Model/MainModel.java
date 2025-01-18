@@ -77,7 +77,7 @@ public class MainModel {
     
     public int insert(String columns, Object... values){
         String placeholders = "?,".repeat(values.length).replaceAll(",$", "");
-        String query = "INSERT INTO " + table + " (" + columns + ") VALUES (" + placeholders + ")";
+        String query = "INSERT INTO " + table + " (" + ((columns != null) ? columns : String.join(", ", attributes)) + ") VALUES (" + placeholders + ")";
         return db.executeUpdate(query, values);
     }
     

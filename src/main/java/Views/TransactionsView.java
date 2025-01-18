@@ -27,15 +27,11 @@ public class TransactionsView extends JPanel implements ViewInterface{
         buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         buttonsPanel.setPreferredSize(new Dimension(400, 300)); // Ajusta o tamanho do painel de botões
 
-        // Criando os botões
-        JButton testButton1 = new JButton("TestButton 1");
-        JButton testButton2 = new JButton("TestButton 2");
-
-        testButton1.addActionListener(new EventListener("testRoute1", 0));
-        testButton2.addActionListener(new EventListener("testRoute2", 0));
+        JButton newTransaction = new JButton("New Transaction");
         
-        buttonsPanel.add(testButton1);
-        buttonsPanel.add(testButton2);
+        newTransaction.addActionListener(new EventListener("new_transaction", 0));
+        
+        buttonsPanel.add(newTransaction);
         
         add(buttonsPanel);
         
