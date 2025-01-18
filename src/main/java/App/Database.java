@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -121,6 +122,10 @@ public class Database {
     
     public int executeUpdate(String query, Object... params){
         try{
+            
+            System.out.println("Query: " + query);
+            System.out.println("Params: " + Arrays.toString(params));
+            
             PreparedStatement stmt = conn.prepareStatement(query);
             setParameters(stmt, params);
             

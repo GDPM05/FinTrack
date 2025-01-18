@@ -37,6 +37,7 @@ public class TransactionsController extends MainController implements Controller
     
     public void sayGoodBye(String[] params){
         System.out.println("Goddbye!");
+        
         redirect("transactions", null);
     }
     

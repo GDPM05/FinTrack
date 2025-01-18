@@ -59,7 +59,7 @@ public class MainModel {
         try{
             String[][] data = new String[this.fetchCount()][this.attributes.length];
             
-            ResultSet rs = db.executeQuery(query, null);
+            ResultSet rs = db.executeQuery(query  );
             
             int index = 0;
             
@@ -100,7 +100,7 @@ public class MainModel {
         try{
             int data;
             
-            ResultSet rs = db.executeQuery(query, null);
+            ResultSet rs = db.executeQuery(query);
             
             data = rs.getInt(0);
             
