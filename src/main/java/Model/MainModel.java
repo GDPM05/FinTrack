@@ -84,7 +84,7 @@ public class MainModel {
     public int deleteById(int id){
         String query = "DELETE FROM "+table+" WHERE id = ?";
         
-        return db.executeUpdate(query, key);
+        return db.executeUpdate(query, id);
     }
     
     public int delete(String attribute, Object... value){

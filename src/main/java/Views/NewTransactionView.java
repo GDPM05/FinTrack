@@ -69,11 +69,15 @@ public class NewTransactionView extends JPanel implements ViewInterface {
         // Campo para ID da categoria
         JLabel categoryIdLabel = new JLabel("Category ID:");
         JTextField categoryIdField = new JTextField(20);
+        JButton newCategory = new JButton("New Category");
+        newCategory.addActionListener(new EventListener("categories", 0));
         gbc.gridx = 0;
         gbc.gridy = 4;
         formPanel.add(categoryIdLabel, gbc);
         gbc.gridx = 1;
         formPanel.add(categoryIdField, gbc);
+        gbc.gridx = 2;
+        formPanel.add(newCategory, gbc);
 
         // Botão de submissão
         JButton submitButton = new JButton("Submit");

@@ -16,7 +16,7 @@ public class TransactionsController extends MainController implements Controller
     private TransactionsModel model;
     
     public TransactionsController(){
-        model = new TransactionsModel();;
+        model = new TransactionsModel();
     }
     
     public void index(){
