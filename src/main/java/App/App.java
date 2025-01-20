@@ -28,8 +28,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -46,9 +44,11 @@ public class App {
     
     private Database db;
     private Router router;
+    private MainView page;
+    private Logger logger;
+    
     private List<ControllerInterface> controllers = new ArrayList<>();
     private Map<String, Integer> controllers_map = new HashMap<>();
-    private MainView page;
     
     private App(){
         StackTraceElement[] stackTree = Thread.currentThread().getStackTrace();
@@ -57,10 +57,10 @@ public class App {
         String methodName = stackTree[2].getMethodName();
         
         System.out.println("Class name: \n - Class: "+className + "\n - Method name: "+methodName);
-        System.out.println("<----------------------------------------- Construtor App chamado. ----------------------------------------->");
         // Method responsible for kickstarting our application
         System.out.println("ClassLoader: " + App.class.getClassLoader());
         this.prepare();
+        logger.newLog(1, "App called", "App constructor called, app intialized."); 
     }
         
     private void prepare(){
@@ -69,6 +69,9 @@ public class App {
                 
         // Initializes the router
         this.router = new Router();
+        
+        // Initializes the logger
+        logger = Logger.getInstance();
     }
     
     public static synchronized App getInstance(){
