@@ -28,7 +28,7 @@ public class Config {
         {"submitTransaction", "POST", "TransactionsController/newTransaction"},
         {"categories", "GET", "CategoryController/index"},
         {"newCategoryMenu", "GET", "CategoryController/newCategoryMenu"},
-        {"newCategory", "POST", "CategoryController/newCategory"}
+        {"submitCategory", "POST", "CategoryController/newCategory"}
     };
     
 }

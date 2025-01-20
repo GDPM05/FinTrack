@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Model.CategoryModel;
 import Model.TransactionsModel;
 import java.util.Arrays;
 
@@ -13,31 +14,42 @@ import java.util.Arrays;
  */
 public class TransactionsController extends MainController implements ControllerInterface {
     
-    private TransactionsModel model;
+    private TransactionsModel transactionsModel;
+    private CategoryModel categoryModel;
     
     public TransactionsController(){
-        model = new TransactionsModel();
+        transactionsModel = new TransactionsModel();
+        categoryModel = new CategoryModel();
     }
     
     public void index(){
-        loadView("Transactions");
+        loadView("Transactions", null);
     }
     
     public void newTransactionsMenu(){
-        loadView("NewTransaction");
+        
+        String[][] categoriesRaw = categoryModel.fetchAll("name");
+        
+        String[] categories = new String[categoriesRaw.length];
+        
+        for(int i = 0; i < categories.length; i++){
+            categories[i] = categoriesRaw[i][0];
+        }
+        
+        loadView("NewTransaction", categories);
     }
     
     public void newTransaction(String[] params){
         System.out.println("Data: "+Arrays.toString(params));
         
-        model.insert(null, params);        
+        transactionsModel.insert(null, params);        
     }
     
     public void sayHello(String[] params){
         
         System.out.println("Hello!");
         
-        String[] data = model.findById(1);
+        String[] data = transactionsModel.findById(1);
         System.out.println("Data 0: "+data[0]);
         //System.out.println("Returned data: "+Arrays.deepToString(data));
         

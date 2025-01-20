@@ -10,7 +10,7 @@ import Model.CategoryModel;
  *
  * @author jpfa0
  */
-public class CategoryController extends MainController{
+public class CategoryController extends MainController implements ControllerInterface{
     
     CategoryModel model;
     
@@ -19,11 +19,19 @@ public class CategoryController extends MainController{
     }
     
     public void index(){
-        loadView("CategoriesMenuView");
+        loadView("CategoriesMenu", null);
     }
     
-    public void newCategory(){       
-        loadView("NewCategoryMenu");
+    public void newCategoryMenu(){       
+        loadView("NewCategoryMenu", null);
+    }
+    
+    public void newCategory(String[] params){
+        
+        params[1] = (params[1].equals("Income")) ? "1" : "0";
+        
+        model.insert(null, params);
+        
     }
     
 }

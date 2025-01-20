@@ -5,6 +5,7 @@ import com.sun.istack.Nullable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,21 +52,29 @@ public class MainModel {
         
     }
     
-    public String[][] fetchAll(){
-        String attributes = String.join(", ", this.attributes);
+    public String[][] fetchAll(String attributes){
+        
+        if(attributes == null)
+            attributes = String.join(", ", this.attributes);
         
         String query = "SELECT "+attributes+" FROM "+table+";";
         
         try{
-            String[][] data = new String[this.fetchCount()][this.attributes.length];
             
-            ResultSet rs = db.executeQuery(query  );
+            ResultSet rs = db.executeQuery(query);
             
             int index = 0;
             
+            String[] splitAttributes = attributes.split(", ");
+            
+            System.out.println("SplitAttributes length: "+splitAttributes.length);
+            
+            String[][] data = new String[this.fetchCount()][splitAttributes.length];
+            
             while(rs.next()){
-                for(int i = 0; i < this.attributes.length; i++){
+                for(int i = 0; i < splitAttributes.length; i++){
                     data[index][i] = (String)rs.getObject(i+1);
+                    index++;
                 }
             }
             return data;
@@ -95,14 +104,14 @@ public class MainModel {
     
     public int fetchCount(){
         
-        String query = "SELECT COUNT(*) FROM"+table;
+        String query = "SELECT COUNT(\"*\") FROM '"+table+"';";
         
         try{
             int data;
             
             ResultSet rs = db.executeQuery(query);
             
-            data = rs.getInt(0);
+            data = rs.getInt(1);
             
             return data;
         }catch(SQLException e){

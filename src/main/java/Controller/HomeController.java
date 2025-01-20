@@ -19,7 +19,7 @@ public class HomeController extends MainController implements ControllerInterfac
     }
     
     public void index(){        
-        loadView("Home");
+        loadView("Home", null);
     } 
     
 }

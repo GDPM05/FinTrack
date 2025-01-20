@@ -16,7 +16,7 @@ import javax.swing.JPanel;
  *
  * @author jpfa0
  */
-public class CategoriesMenuView extends JPanel{
+public class CategoriesMenuView extends JPanel implements ViewInterface{
     
     public CategoriesMenuView(){
         
