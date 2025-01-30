@@ -21,6 +21,8 @@ public class Router {
     private String currentRoute;
     private int currentIndex = -1;
     
+    Logger logger = Logger.getInstance();
+    
     public Router(){
         routesHistory = new String[20];
         routeTypeHistory = new String[20];
@@ -28,6 +30,7 @@ public class Router {
     }
     
     public void map_routes(String[][] routes){
+        logger.newLog(0, "Routes Mapping", "Mapping every listed route.");
         // Iterates over the routes to map them
         for(int i = 0; i < routes.length; i++){
             route_map.put(routes[i][0], i);
@@ -41,9 +44,12 @@ public class Router {
      
         currentIndex += 1;
         
+        logger.newLog(1, "Update History", "Updating the routes history. \n Current index: "+currentIndex);
+        
         if(currentIndex == routesHistory.length - 1){
             currentIndex = routesHistory.length - 1;
             shiftRoutes();
+            logger.newLog(1, "Update History", "Shifting routes.");
         }
         
         routesHistory[currentIndex] = route;
@@ -56,13 +62,19 @@ public class Router {
     
     private boolean checkLoop(){
         
+        logger.newLog(1, "Router", "Checking for loops.");
+        
         String x = routesHistory[currentIndex];
         String y = routesHistory[currentIndex-1];
         String z = routesHistory[currentIndex-2];
             
+        logger.newLog(1, "CheckLoop", "Current and past routes: \n"+x+"\n"+y+"\n"+z);
+        
         String[] callerX = callerHistory[currentIndex];
         String[] callerY = callerHistory[currentIndex-1];
         String[] callerZ = callerHistory[currentIndex-2];
+        
+        logger.newLog(1, "CheckLoop", "Past routes callers: \n"+callerX[0]+"\n"+callerY[0]+"\n"+callerZ[0]);
         
         System.out.println("CallerX: "+callerX[0]+"\nCallerY: "+callerY[0]+"\nCallerZ: "+callerZ[0]);
         

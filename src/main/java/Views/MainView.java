@@ -16,7 +16,7 @@ public class MainView {
     public MainView() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1240, 800);
+        frame.setSize(800, 800);
         frame.setLocationRelativeTo(null);
 
         // Define o layout do frame como BorderLayout

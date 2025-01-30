@@ -70,7 +70,7 @@ public class NewTransactionView extends JPanel implements ViewInterface {
         JLabel categoryIdLabel = new JLabel("Category:");
         JComboBox<String> categoryField = new JComboBox<>(data);
         JButton newCategory = new JButton("New Category");
-        newCategory.addActionListener(new EventListener("categories", 0));
+        newCategory.addActionListener(new EventListener("newCategoryMenu", 0));
         gbc.gridx = 0;
         gbc.gridy = 4;
         formPanel.add(categoryIdLabel, gbc);

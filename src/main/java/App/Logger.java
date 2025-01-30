@@ -63,11 +63,13 @@ public class Logger {
         
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         
-        try(FileWriter writer = new FileWriter(PATH)){
+        try(FileWriter writer = new FileWriter(PATH, true)){
             gson.toJson(log, writer);
+            writer.write(System.lineSeparator()); // Adiciona uma nova linha para separar os logs
         }catch(IOException e){
             e.printStackTrace();
         }
+
     }
     
     private void getPath(){
