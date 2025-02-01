@@ -68,27 +68,17 @@ public class App {
         db = Database.getInstance();
                 
         // Initializes the router
-        this.router = new Router();
+        this.router = new Router(this.instance);
         
         // Initializes the logger
         logger = Logger.getInstance();
     }
     
     public static synchronized App getInstance(){
-        StackTraceElement[] stackTree = Thread.currentThread().getStackTrace();
-        
-        String className = stackTree[2].getClassName();
-        String methodName = stackTree[2].getMethodName();
-        
-        //System.out.println("Class b name: \n - Class: "+className + "\n - Method name: "+methodName);
         if(instance == null) {
             synchronized (App.class) {
-                if(instance == null) {
-                    System.out.println("Antes: " + instance);
+                if(instance == null) 
                     instance = new App();
-                    System.out.println("Depois: " + instance);
-
-                }
             }
         }
         return instance;

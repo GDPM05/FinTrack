@@ -4,6 +4,7 @@
  */
 package App;
 
+import Controller.MainController;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,12 +22,16 @@ public class Router {
     private String currentRoute;
     private int currentIndex = -1;
     
+    private App app;
+    
+    
     Logger logger = Logger.getInstance();
     
-    public Router(){
+    public Router(App appInstance){
         routesHistory = new String[20];
         routeTypeHistory = new String[20];
         callerHistory = new String[20][2];
+        app = appInstance;
     }
     
     public void map_routes(String[][] routes){
@@ -113,9 +118,12 @@ public class Router {
         if(currentIndex == 0)
             return null;
         
-        if(currentIndex > 2)
+        if(currentIndex > 2){
             currentIndex = (checkLoop()) ? currentIndex-2 : currentIndex-1;
-        else
+            if(routeTypeHistory[currentIndex-1] == "POST"){
+                return "confirmRePost";
+            }
+        }else
             currentIndex -= 1;
         
         return routesHistory[currentIndex];
