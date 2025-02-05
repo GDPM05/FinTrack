@@ -42,7 +42,9 @@ public class TransactionsController extends MainController implements Controller
     public void newTransaction(String[] params){
         System.out.println("Data: "+Arrays.toString(params));
         
-        transactionsModel.insert(null, params);        
+        transactionsModel.insert(null, params);    
+        
+        redirect("transactions", null);
     }
     
     public void sayHello(String[] params){

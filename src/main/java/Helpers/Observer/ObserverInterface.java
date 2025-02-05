@@ -10,6 +10,10 @@ package Helpers.Observer;
  */
 public interface ObserverInterface {
  
-    void update(Object... param);
+    String notify(String response);
+    
+    String execute(String response);
+    
+    String getName();
     
 }

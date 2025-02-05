@@ -5,6 +5,7 @@
 package App;
 
 import Controller.ControllerInterface;
+import Controller.MainController;
 import Views.MainView;
 import Views.ViewInterface;
 
@@ -49,6 +50,8 @@ public class App {
     
     private List<ControllerInterface> controllers = new ArrayList<>();
     private Map<String, Integer> controllers_map = new HashMap<>();
+    
+    private String[] lastPostParams;
     
     private App(){
         StackTraceElement[] stackTree = Thread.currentThread().getStackTrace();
@@ -148,7 +151,7 @@ public class App {
         
         System.out.println("Route caller: \n - Class: "+className + "\n - Method name: "+methodName);
         
-        //System.out.println("Route: "+route);
+        System.out.println("Current Route: "+route);
         if(route == null || route.equals(""))
             return;
         
@@ -204,6 +207,8 @@ public class App {
                 if(params == null)
                     params = new String[0];
                 
+                lastPostParams = params;
+                
                 // Get the method from the class with arguments
                 method.invoke(controllerInstance, (Object) params); // Cast the params to Object
                 
@@ -254,23 +259,27 @@ public class App {
        
         switch(operation){
             case "Prev":
-                /*System.out.println("Last route: "+lastPrevRoutes.get(lastPrevRoutes.size()-2));
-                currentRoute = lastPrevRoutes.get(tempPrevRoutesIndex);
-                System.out.println("---------Current route:: "+currentRoute);
-                System.out.println("Teste");
-                String lastRoute = lastPrevRoutes.get(lastPrevRoutes.size() - tempPrevRoutesIndex-1);
-                lastNextRoutes.add(currentRoute);*/
                 String lastRoute = router.previousRoute();
-                //System.out.println("Previous route: "+lastRoute);
                 callRoute(lastRoute, null, null);
                 break;
             case "Next":
-                /*System.out.println("Next called.");
-                String nextRoute = lastNextRoutes.get(lastNextRoutes.size() - tempNextRouteIndex-1);
-                System.out.println("Next route: "+nextRoute);*/
                 String nextRoute = router.nextRoute();
-                //System.out.println("Next route: "+nextRoute);
                 callRoute(nextRoute, null, null);
+                break;
+            case "ConfirmRePost":
+                callRoute("confirmationPage", null, null);
+                break;
+            case "ConfirmPost":
+                callRoute(router.confirmPost(true), null, null);
+                break;
+            case "CancelPost":
+                callRoute(router.confirmPost(false), null, null);
+                break;
+            case "PostCanceled":
+                callRoute(router.previousRoute(), null, null);
+                break;
+            case "PostConfirmed": 
+                callRoute(router.currentRoute(), lastPostParams, null);
                 break;
         }
         

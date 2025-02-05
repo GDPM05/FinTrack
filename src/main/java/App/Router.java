@@ -5,8 +5,11 @@
 package App;
 
 import Controller.MainController;
+import Helpers.Observer.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,6 +17,8 @@ import java.util.Map;
  * @author gdpm
  */
 public class Router {
+    
+    ArrayList<ObserverInterface> observers = new ArrayList<ObserverInterface>();
     
     Map<String, Integer> route_map = new HashMap<>();   
     private String[] routesHistory;
@@ -63,6 +68,7 @@ public class Router {
         callerHistory[currentIndex] = caller;
         
         System.out.println("Current index: "+currentIndex+"\nCurrent route in the index: "+routesHistory[currentIndex]);
+        System.out.println("Route History: "+Arrays.toString(routesHistory));
     }
     
     private boolean checkLoop(){
@@ -115,19 +121,41 @@ public class Router {
     
     public String previousRoute(){
         
+        System.out.println("Route History: "+Arrays.toString(routesHistory));
+        
         if(currentIndex == 0)
             return null;
         
+        System.out.println("Current Index: "+currentIndex);
+        
         if(currentIndex > 2){
-            currentIndex = (checkLoop()) ? currentIndex-2 : currentIndex-1;
-            if(routeTypeHistory[currentIndex-1] == "POST"){
-                return "confirmRePost";
+            currentIndex = currentIndex-1;
+            if("POST".equals(routeTypeHistory[currentIndex])){
+                observers.add(new RouterObserver("confirmPost", App.getInstance(), Logger.getInstance()));
+                return "systemConfirmRePost";
             }
         }else
             currentIndex -= 1;
         
+        System.out.println("Previous Route: "+routesHistory[currentIndex]);
+        
         return routesHistory[currentIndex];
     }
+
+    public String confirmPost(boolean confirmation) {
+        
+        for(int i = 0; i < observers.size(); i++){
+            if(observers.get(i).getName().equals("confirmPost"))
+                return observers.get(i).notify((confirmation) ? "confirm" : "cancel");
+        }
+        
+        return null;
+    }
+
+    public String currentRoute() {
+        return routesHistory[currentIndex];
+    }
+    
     
     
 }

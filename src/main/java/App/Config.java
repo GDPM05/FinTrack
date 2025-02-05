@@ -31,6 +31,7 @@ public class Config {
         {"submitCategory", "POST", "CategoryController/newCategory"},
         {"systemlogs", "GET", "LogsController/index"},
         {"logsList", "GET", "LogsController/listLogs"},
+        {"confirmationPage", "GET", "SystemController/confirmationPage"}
     };
     
 }

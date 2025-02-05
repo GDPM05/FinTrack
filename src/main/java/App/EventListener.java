@@ -66,7 +66,11 @@ public class EventListener implements ActionListener{
             }
         }else{
             // Calls the method "CallRoute" from the main controller
-            app.callRoute(route, null, null);
+            StackTraceElement[] stackTree = Thread.currentThread().getStackTrace();
+        
+            String className = stackTree[2].getClassName();
+            String methodName = stackTree[2].getMethodName();
+            app.callRoute(route, null, new String[]{className, methodName});
             return;
         }
         
