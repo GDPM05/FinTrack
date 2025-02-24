@@ -47,6 +47,12 @@ public class TransactionsController extends MainController implements Controller
         redirect("transactions", null);
     }
     
+    public void myTransactionsMenu(){
+        
+        
+        
+    }
+    
     public void sayHello(String[] params){
         
         System.out.println("Hello!");

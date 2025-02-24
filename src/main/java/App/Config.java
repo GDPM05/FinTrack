@@ -25,6 +25,7 @@ public class Config {
         {"accounts", "GET", "AccountsController/index"},
         {"goals", "GET", "GoalsController/index"},
         {"new_transaction", "GET", "TransactionsController/newTransactionsMenu"},
+        {"my_transactions", "GET", "TransactionsController/myTransactionsMenu"},
         {"submitTransaction", "POST", "TransactionsController/newTransaction"},
         {"categories", "GET", "CategoryController/index"},
         {"newCategoryMenu", "GET", "CategoryController/newCategoryMenu"},
