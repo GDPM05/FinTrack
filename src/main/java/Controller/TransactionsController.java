@@ -4,8 +4,10 @@
  */
 package Controller;
 
+import Helpers.Paginator.Paginator;
 import Model.CategoryModel;
 import Model.TransactionsModel;
+import Objects.Transaction;
 import java.util.Arrays;
 
 /**
@@ -28,7 +30,7 @@ public class TransactionsController extends MainController implements Controller
     
     public void newTransactionsMenu(){
         
-        String[][] categoriesRaw = categoryModel.fetchAll("name");
+        String[][] categoriesRaw = categoryModel.fetchAll("name", null, null);
         
         String[] categories = new String[categoriesRaw.length];
         
@@ -39,7 +41,7 @@ public class TransactionsController extends MainController implements Controller
         loadView("NewTransaction", categories);
     }
     
-    public void newTransaction(String[] params){
+    public void newTrannsaction(String[] params){
         System.out.println("Data: "+Arrays.toString(params));
         
         transactionsModel.insert(null, params);    
@@ -49,26 +51,24 @@ public class TransactionsController extends MainController implements Controller
     
     public void myTransactionsMenu(){
         
+        int maxPerPage = 20;
         
+        int totalTransactions = transactionsModel.fetchCount();
         
+        Paginator paginator = new Paginator(maxPerPage, totalTransactions);
+        
+        String[][] transactionsArr = transactionsModel.fetchAll("id, description, value, date, type, category_id", paginator.calculateOffset(), paginator.getEnd());
+        
+        Transaction[] transactions = new Transaction[transactionsArr.length];
+        
+        for(int i = 0; i < transactions.length; i++){
+            transactions[i] = new Transaction(transactionsArr[i][0], transactionsArr[i][1], transactionsArr[i][2], transactionsArr[i][3], transactionsArr[i][4],transactionsArr[i][5]);;
+        }
+        
+        System.out.println("Transactions: \n"+Arrays.deepToString(transactions));
+        
+        loadView("MyTransactionsMenu", transactions);
     }
-    
-    public void sayHello(String[] params){
-        
-        System.out.println("Hello!");
-        
-        String[] data = transactionsModel.findById(1);
-        System.out.println("Data 0: "+data[0]);
-        //System.out.println("Returned data: "+Arrays.deepToString(data));
-        
-        redirect("transactions", null);
-        
-    }
-    
-    public void sayGoodBye(String[] params){
-        System.out.println("Goddbye!");
-        
-        redirect("transactions", null);
-    }
+   
     
 }

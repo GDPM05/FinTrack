@@ -16,9 +16,9 @@ public class Paginator {
     private int currentPage;
     
     public Paginator(int itemsPerPage, int totalItems){
-        this.itemsPerPage = itemsPerPage;
-        this.totalItems = totalItems;
-        this.currentPage = 0;
+        this.itemsPerPage = Math.max(1, itemsPerPage);
+        this.totalItems = Math.max(0, totalItems);
+        this.currentPage = 1;
     }
     
     public int calculateOffset(){
@@ -26,15 +26,19 @@ public class Paginator {
     }
     
     public void nextPage(){
-        this.currentPage += 1;
+        if(currentPage < getTotalPages())
+            this.currentPage++;
+        
     }
     
     public void prevPage(){
-        this.currentPage -= 1;
+        if(currentPage > 1)
+            this.currentPage -= 1;
     }
     
     public void goToPage(int page){
-        this.currentPage = page;
+        if(page >= 1 && page <= getTotalPages())
+            this.currentPage = page;
     }
     
     public int getItemsPerPage() {
@@ -42,15 +46,25 @@ public class Paginator {
     }
 
     public void setItemsPerPage(int itemsPerPage) {
-        this.itemsPerPage = itemsPerPage;
+        if(itemsPerPage > 0)
+            this.itemsPerPage = itemsPerPage;
     }
 
     public int getTotalItems() {
         return totalItems;
     }
 
+    public int getTotalPages(){
+        return (int) Math.ceil((double) totalItems / itemsPerPage);
+    }
+    
     public void setTotalItems(int totalItems) {
-        this.totalItems = totalItems;
+        if(totalItems > 0)
+            this.totalItems = totalItems;
+    }
+    
+    public int getEnd(){
+        return Math.min(this.calculateOffset() + itemsPerPage, totalItems);
     }
 
     public int getCurrentPage() {

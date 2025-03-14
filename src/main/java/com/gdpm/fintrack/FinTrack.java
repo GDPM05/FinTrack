@@ -7,8 +7,11 @@ package com.gdpm.fintrack;
 import App.Database;
 import App.App;
 import Controller.MainController;
+import Helpers.Paginator.Paginator;
 import java.awt.*;
 import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.Scanner;
 /**
  *
  * @author gdpm
@@ -38,15 +41,59 @@ public class FinTrack {
         
         String[] testData = {"Hello", "18", "Unemployed"};
         
-        //System.out.println("Teste1: \n"+teste1+"\n Teste2: \n"+teste2);
+        /*String[] data = {
+            "Item 1", "Item 2", "Item 3", "Item 4", "Item 5",
+            "Item 6", "Item 7", "Item 8", "Item 9", "Item 10",
+            "Item 11", "Item 12", "Item 13", "Item 14", "Item 15",
+            "Item 16", "Item 17", "Item 18", "Item 19", "Item 20"
+        };
         
-        //System.out.println("Teste1 contains? \n"+(teste1.contains("Manin"))+"\nTeste2 contains? \n"+(teste2.contains("Interface")));
+        int itemsPerPage = 5;
+        Paginator paginator = new Paginator(itemsPerPage, data.length);
+        
+        Scanner scanner = new Scanner(System.in);
+        
+        boolean running = true;
+                
+        while(running) {
+            int offset = paginator.calculateOffset();
+            int totalPages = paginator.getTotalPages();
+            int currentPage = paginator.getCurrentPage();
+            
+            int start = offset;
+            int end = paginator.getEnd();
+            
+            String[] pageData = Arrays.copyOfRange(data, start, end);
+            
+            System.out.println("\nPáginaá " + currentPage + " de " + totalPages);
+            
+            for(String item : pageData) {
+                System.out.println("- " + item);
+            }
+            
+            System.out.println("\nOpções: [n] Próxima Página | [p] Página Anterior | [s] Sair");
+            System.out.print("Escolha: ");
+            String choice = scanner.nextLine().trim().toLowerCase();
+
+            switch (choice) {
+                case "n":
+                    paginator.nextPage();
+                    break;
+                case "p":
+                    paginator.prevPage();
+                    break;
+                case "s":
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Opção inválida! Tente novamente.");
+            }
+        }
+
+        System.out.println("Programa encerrado.");
+        scanner.close();*/
         
         app.callRoute("home", null, null);
-        
-        //mc.callRoute("test2", null);
-        
-        //mc.callRoute("post_test", testData);
         
     }
 }

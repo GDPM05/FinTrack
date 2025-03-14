@@ -222,9 +222,11 @@ public class App {
             
             System.out.println("Method successfully executed. "+method_name);
         }catch (NoSuchMethodException e) {
+            logger.newLog(3, "callRoute", "Try to find a method in the controller but was unsuccessful.");
             System.err.println("No such method found: " + method_name);
             e.printStackTrace();
         } catch (IllegalAccessException | InvocationTargetException e) {
+            logger.newLog(3, "callRoute", "Try to invoke a method in the controller but was unsuccessful.");
             System.err.println("Error invoking method: " + e.getMessage());
             stackTree = Thread.currentThread().getStackTrace();
 
@@ -234,6 +236,7 @@ public class App {
             //System.out.println("Route caller: \n - Class: "+className + "\n - Method name: "+methodName);
             e.printStackTrace();
         } catch (Exception e) {
+            logger.newLog(3, "callRoute", "Try to call a route, but an unexpected error was found.");
             System.err.println("Unexpected error: " + e.getMessage());
             e.printStackTrace();
         }

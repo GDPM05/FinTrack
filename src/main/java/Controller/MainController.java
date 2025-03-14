@@ -27,14 +27,14 @@ public class MainController {
         app = App.getInstance();
     }
 
-    protected void loadView(String viewName, String[] params) {
+    protected void loadView(String viewName, Object[] params) {
         try {
             String classFullName = "Views." + viewName + "View";
             System.out.println("View name: "+classFullName);
             Class<?> view = Class.forName(classFullName);
             ViewInterface instance; 
             if(params != null){
-                var constructor = view.getDeclaredConstructor(String[].class);
+                var constructor = view.getDeclaredConstructor(Object[].class);
                 instance = (ViewInterface) constructor.newInstance((Object) params);
             } else {
                 instance = (ViewInterface) view.getDeclaredConstructor().newInstance();

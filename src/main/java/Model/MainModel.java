@@ -52,37 +52,40 @@ public class MainModel {
         
     }
     
-    public String[][] fetchAll(String attributes){
-        
-        if(attributes == null)
+    public String[][] fetchAll(String attributes, Integer start, Integer limit) {
+        if (attributes == null)
             attributes = String.join(", ", this.attributes);
-        
-        String query = "SELECT "+attributes+" FROM "+table+";";
-        
-        try{
-            
+
+        // Construção da query com paginação
+        String query = "SELECT " + attributes + " FROM " + table;
+        if (start != null && limit != null) {
+            query += " LIMIT " + limit + " OFFSET " + start;
+        } else if (limit != null) {
+            query += " LIMIT " + limit;
+        }
+        query += ";";
+
+        try {
             ResultSet rs = db.executeQuery(query);
-            
+
             int index = 0;
-            
             String[] splitAttributes = attributes.split(", ");
-            
-            System.out.println("SplitAttributes length: "+splitAttributes.length);
-            
-            String[][] data = new String[this.fetchCount()][splitAttributes.length];
-            
-            while(rs.next()){
-                for(int i = 0; i < splitAttributes.length; i++){
-                    data[index][i] = (String)rs.getObject(i+1);
-                    index++;
+            int rowCount = (limit != null) ? limit : this.fetchCount(); // Garante que o array tenha o tamanho correto
+            String[][] data = new String[rowCount][splitAttributes.length];
+
+            while (rs.next() && index < rowCount) {
+                for (int i = 0; i < splitAttributes.length; i++) {
+                    data[index][i] = rs.getObject(i + 1).toString();
                 }
+                index++;
             }
             return data;
-        }catch(SQLException e){
-            System.out.println("Error while trying to fetch all: "+e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error while trying to fetch all: " + e.getMessage());
             return null;
         }
     }
+
     
     public int insert(String columns, Object... values){
         String placeholders = "?,".repeat(values.length).replaceAll(",$", "");
