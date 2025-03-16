@@ -111,7 +111,9 @@ public class App {
                 // To load a class dynamically we need the class's fully qualified name
                 String className = "Controller." + fileName;
                 
-                String sClassName = fileName.split(".")[0];
+                String sClassName = fileName.split("[.]")[0];
+                    
+                System.out.println("sClassName");
                 
                 this.controllersReference.put(sClassName, className);
                 
