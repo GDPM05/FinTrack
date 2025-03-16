@@ -50,6 +50,7 @@ public class App {
     
     private List<ControllerInterface> controllers = new ArrayList<>();
     private Map<String, Integer> controllers_map = new HashMap<>();
+    private Map<String, String> controllersReference = new HashMap<>();
     
     private String[] lastPostParams;
     
@@ -109,7 +110,11 @@ public class App {
 
                 // To load a class dynamically we need the class's fully qualified name
                 String className = "Controller." + fileName;
-
+                
+                String sClassName = fileName.split(".")[0];
+                
+                this.controllersReference.put(sClassName, className);
+                
                 try {
                     Class<?> currentClass = Class.forName(className);
 
