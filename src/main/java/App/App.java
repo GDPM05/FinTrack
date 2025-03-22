@@ -113,31 +113,9 @@ public class App {
                 
                 String sClassName = fileName.split("[.]")[0];
                     
-                System.out.println("sClassName");
+                System.out.println("sClassName "+sClassName);
                 
                 this.controllersReference.put(sClassName, className);
-                
-                try {
-                    Class<?> currentClass = Class.forName(className);
-
-                    if (ControllerInterface.class.isAssignableFrom(currentClass)) {
-                        ControllerInterface controller = (ControllerInterface) currentClass.getDeclaredConstructor().newInstance();
-                        System.out.println("Current class -> 104: " + className);
-                        controllers.add(controller);
-                        System.out.println("Class Name: " + className + "\nLast class in List: " + controllers.get(controllers.size() - 1).getClass().getName());
-                        controllers_map.put(className, controllers.size() - 1);
-                        System.out.println("Last map: " + controllers_map.get(className));
-                    }
-                } catch (ClassNotFoundException e) {
-                    System.out.println("Class not found: " + className);
-                    return;
-                } catch (ClassCastException e) {
-                    System.out.println("Class conversion error: " + e.getMessage());
-                    return;
-                } catch (Exception e) {
-                    System.out.println("General Error: " + e.getMessage());
-                    return;
-                }
             }
 
         }catch(IOException | DirectoryIteratorException x){
@@ -185,6 +163,8 @@ public class App {
         String controller = "Controller."+action.split("/")[0];
         String method_name = action.split("/")[1];
         
+        System.out.println("Controller: "+controller);
+        
         if(methodName != "executeSystemOperation"){
             System.out.println("Non system route called");
             //lastPrevRoutes.add(route);
@@ -195,7 +175,7 @@ public class App {
         try{
             
             // Get controller instance
-            Object controllerInstance = controllers.get(controllers_map.get(controller));
+            Object controllerInstance = this.invokeController(controller);
             
             if(controllerInstance == null)
                 throw new RuntimeException("Controller not found: "+controller);
@@ -247,6 +227,45 @@ public class App {
             System.err.println("Unexpected error: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+        
+        
+    // Method responsible for invoking the controllers
+    private ControllerInterface invokeController(String controllerName){
+        
+        System.out.println("Invoking a controller");
+        
+        ControllerInterface instance = null;
+        
+        String controller = controllerName.split("[.]")[1];
+        
+        if(this.controllers_map.containsKey(controller)) {
+            int controllerIndex = this.controllers_map.get(controller);
+            instance = this.controllers.get(controllerIndex);
+            System.out.println("Controller already instantiated");
+        } else {
+            System.out.println("Creating a new instance");
+            try {
+                String className = this.controllersReference.get(controller);
+                
+                Class<?> currentClass = Class.forName(className);
+
+                if (ControllerInterface.class.isAssignableFrom(currentClass)) {
+                    instance = (ControllerInterface) currentClass.getDeclaredConstructor().newInstance();
+                    controllers.add(instance);
+                    controllers_map.put(controller, controllers.size() - 1);
+                }
+            } catch (ClassCastException e) {
+                System.out.println("Class conversion error: " + e.getMessage());
+                return null;
+            } catch (Exception e) {
+                System.out.println("General Error: " + e.getMessage());
+                return null;
+            }
+            
+        }
+            
+        return instance;
     }
     
     public void config(){
