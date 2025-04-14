@@ -8,7 +8,10 @@ import java.util.Date;
 
 public class NewTransactionView extends JPanel implements ViewInterface {
 
-    public NewTransactionView(String[] data) {
+    public NewTransactionView(Object[] data) {
+        
+        String[] sData = (String[]) data;
+        
         System.out.println("New Transaction view called.");
 
         // Define o layout da view
@@ -68,7 +71,7 @@ public class NewTransactionView extends JPanel implements ViewInterface {
 
         // Campo para ID da categoria
         JLabel categoryIdLabel = new JLabel("Category:");
-        JComboBox<String> categoryField = new JComboBox<>(data);
+        JComboBox<String> categoryField = new JComboBox<>(sData);
         JButton newCategory = new JButton("New Category");
         newCategory.addActionListener(new EventListener("newCategoryMenu", 0));
         gbc.gridx = 0;

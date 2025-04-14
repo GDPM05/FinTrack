@@ -41,7 +41,7 @@ public class TransactionsController extends MainController implements Controller
         loadView("NewTransaction", categories);
     }
     
-    public void newTrannsaction(String[] params){
+    public void newTransaction(String[] params){
         System.out.println("Data: "+Arrays.toString(params));
         
         transactionsModel.insert(null, params);    

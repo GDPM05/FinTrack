@@ -32,6 +32,7 @@ public class CategoryController extends MainController implements ControllerInte
         
         model.insert(null, params);
         
+        this.redirect("new_transaction", null);
     }
     
 }
