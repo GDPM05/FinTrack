@@ -78,7 +78,7 @@ public class Logger {
         String os = System.getProperty("os.name").toLowerCase();
         
         if(os.contains("win"))
-            basePath = System.getProperty("user.home") + "/AppDdata/Local/Fintrack/Logs/";
+            basePath = System.getProperty("user.home") + "/AppData/Local/Fintrack/Logs/";
         else if(os.contains("mac"))
             basePath = System.getProperty("user-home") + "/Library/Application Support/Fintrack/Logs/";
         else if(os.contains("nix") || os.contains("nux") || os.contains("aix"))

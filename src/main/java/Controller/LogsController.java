@@ -15,6 +15,7 @@ public class LogsController extends MainController implements ControllerInterfac
     }
     
     public void index(){
+        System.out.println("Bem-vindo aos logs!");
         loadView("Logs", null);
     }
     

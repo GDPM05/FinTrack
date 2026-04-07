@@ -55,14 +55,6 @@ public class App {
     private String[] lastPostParams;
     
     private App(){
-        StackTraceElement[] stackTree = Thread.currentThread().getStackTrace();
-        
-        String className = stackTree[2].getClassName();
-        String methodName = stackTree[2].getMethodName();
-        
-        System.out.println("Class name: \n - Class: "+className + "\n - Method name: "+methodName);
-        // Method responsible for kickstarting our application
-        System.out.println("ClassLoader: " + App.class.getClassLoader());
         this.prepare();
         logger.newLog(1, "App called", "App constructor called, app intialized."); 
     }
@@ -89,9 +81,7 @@ public class App {
     }
 
     public void getControllers(){
-        System.out.println("Instance: "+(instance != null));
         try{
-            // Controllers folder
             Path dir = Path.of(getClass().getClassLoader().getResource("Controller").toURI());
 
             // DirectoryStream to iterate through the controllers

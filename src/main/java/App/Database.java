@@ -103,7 +103,7 @@ public class Database {
         String os = System.getProperty("os.name").toLowerCase();
         
         if(os.contains("win"))
-            basePath = System.getProperty("user.home") + "/AppDdata/Local/Fintrack/";
+            basePath = System.getProperty("user.home") + "/AppData/Local/Fintrack/";
         else if(os.contains("mac"))
             basePath = System.getProperty("user-home") + "/Library/Application Support/Fintrack/";
         else if(os.contains("nix") || os.contains("nux") || os.contains("aix"))
